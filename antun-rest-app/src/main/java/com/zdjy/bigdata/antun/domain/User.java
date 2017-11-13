@@ -50,7 +50,7 @@ public class User implements Serializable {
     /**
      * 身份证号
      */
-    private String idno;
+    private String idNo;
 
     /**
      * 省编号
@@ -60,7 +60,7 @@ public class User implements Serializable {
     /**
      * 省份名
      */
-    private String provincename;
+    private String provinceName;
 
     /**
      * 城市编号
@@ -70,7 +70,7 @@ public class User implements Serializable {
     /**
      * 城市名
      */
-    private String cityname;
+    private String cityName;
 
     /**
      * 区县编号
@@ -80,27 +80,27 @@ public class User implements Serializable {
     /**
      * 区县名
      */
-    private String townname;
+    private String townName;
 
     /**
      * 渠道码
      */
-    private String channelcode;
+    private String channelCode;
 
     /**
      * 渠道名
      */
-    private String channelname;
+    private String channelName;
 
     /**
      * 产品码
      */
-    private String productcode;
+    private String productCode;
 
     /**
      * 产品名
      */
-    private String productname;
+    private String productName;
 
     private static final long serialVersionUID = 1L;
 
@@ -168,12 +168,12 @@ public class User implements Serializable {
         this.birth = birth;
     }
 
-    public String getIdno() {
-        return idno;
+    public String getIdNo() {
+        return idNo;
     }
 
-    public void setIdno(String idno) {
-        this.idno = idno;
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 
     public Integer getProvince() {
@@ -184,12 +184,12 @@ public class User implements Serializable {
         this.province = province;
     }
 
-    public String getProvincename() {
-        return provincename;
+    public String getProvinceName() {
+        return provinceName;
     }
 
-    public void setProvincename(String provincename) {
-        this.provincename = provincename;
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
     }
 
     public Integer getCity() {
@@ -200,12 +200,12 @@ public class User implements Serializable {
         this.city = city;
     }
 
-    public String getCityname() {
-        return cityname;
+    public String getCityName() {
+        return cityName;
     }
 
-    public void setCityname(String cityname) {
-        this.cityname = cityname;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public Integer getTown() {
@@ -216,43 +216,43 @@ public class User implements Serializable {
         this.town = town;
     }
 
-    public String getTownname() {
-        return townname;
+    public String getTownName() {
+        return townName;
     }
 
-    public void setTownname(String townname) {
-        this.townname = townname;
+    public void setTownName(String townName) {
+        this.townName = townName;
     }
 
-    public String getChannelcode() {
-        return channelcode;
+    public String getChannelCode() {
+        return channelCode;
     }
 
-    public void setChannelcode(String channelcode) {
-        this.channelcode = channelcode;
+    public void setChannelCode(String channelCode) {
+        this.channelCode = channelCode;
     }
 
-    public String getChannelname() {
-        return channelname;
+    public String getChannelName() {
+        return channelName;
     }
 
-    public void setChannelname(String channelname) {
-        this.channelname = channelname;
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
     }
 
-    public String getProductcode() {
-        return productcode;
+    public String getProductCode() {
+        return productCode;
     }
 
-    public void setProductcode(String productcode) {
-        this.productcode = productcode;
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
     }
 
-    public String getProductname() {
-        return productname;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProductname(String productname) {
-        this.productname = productname;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 }

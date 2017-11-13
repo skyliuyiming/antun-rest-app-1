@@ -1,11 +1,16 @@
 package com.zdjy.bigdata.antun.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zdjy.bigdata.antun.domain.User;
+import com.zdjy.bigdata.antun.domain.UserExample;
+import com.zdjy.bigdata.antun.domain.UserExample.Criteria;
 import com.zdjy.bigdata.antun.mapper.UserMapper;
 import com.zdjy.bigdata.antun.service.UserService;
+import com.zdjy.bigdata.antun.util.EsapiUtil;
 import com.zdjy.bigdata.antun.util.TransferUtil;
 import com.zdjy.bigdata.antun.web.model.UserAdd;
 /**
@@ -39,5 +44,17 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		TransferUtil.transfer(user, userAdd);
 		return user;
+	}
+
+	@Override
+	public User findByPhone(String phone) {
+		UserExample userExample=new UserExample();
+		Criteria createCriteria = userExample.createCriteria();
+		createCriteria.andPhoneEqualTo(EsapiUtil.sql(phone));
+		userExample.setLimit(1);
+		List<User> selectByExample = userMapper.selectByExample(userExample);
+		if(!selectByExample.isEmpty())
+			return selectByExample.get(0);
+		return null;
 	}
 }

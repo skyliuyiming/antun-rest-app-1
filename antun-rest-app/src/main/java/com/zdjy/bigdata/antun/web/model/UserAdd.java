@@ -16,6 +16,11 @@ public class UserAdd {
 	private Integer town;
 	private String channelCode;
 	private String productCode;
+	
+	//辅助字段
+	private String channelName;
+	private String productName;
+	
 	public String getName() {
 		return name;
 	}
@@ -75,6 +80,18 @@ public class UserAdd {
 	}
 	public void setProductCode(String productCode) {
 		this.productCode = productCode;
+	}
+	public String getChannelName() {
+		return channelName;
+	}
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 	
 }

@@ -10,17 +10,17 @@
     <result column="sex" jdbcType="INTEGER" property="sex" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="birth" jdbcType="VARCHAR" property="birth" />
-    <result column="idNo" jdbcType="VARCHAR" property="idno" />
+    <result column="id_no" jdbcType="VARCHAR" property="idNo" />
     <result column="province" jdbcType="INTEGER" property="province" />
-    <result column="provinceName" jdbcType="VARCHAR" property="provincename" />
+    <result column="province_name" jdbcType="VARCHAR" property="provinceName" />
     <result column="city" jdbcType="INTEGER" property="city" />
-    <result column="cityName" jdbcType="VARCHAR" property="cityname" />
+    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
     <result column="town" jdbcType="INTEGER" property="town" />
-    <result column="townName" jdbcType="VARCHAR" property="townname" />
-    <result column="channelCode" jdbcType="VARCHAR" property="channelcode" />
-    <result column="channelName" jdbcType="VARCHAR" property="channelname" />
-    <result column="productCode" jdbcType="VARCHAR" property="productcode" />
-    <result column="productName" jdbcType="VARCHAR" property="productname" />
+    <result column="town_name" jdbcType="VARCHAR" property="townName" />
+    <result column="channel_code" jdbcType="VARCHAR" property="channelCode" />
+    <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+    <result column="product_code" jdbcType="VARCHAR" property="productCode" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -81,8 +81,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, gmt_create, gmt_modified, status, name, sex, phone, birth, idNo, province, provinceName, 
-    city, cityName, town, townName, channelCode, channelName, productCode, productName
+    id, gmt_create, gmt_modified, status, name, sex, phone, birth, id_no, province, province_name, 
+    city, city_name, town, town_name, channel_code, channel_name, product_code, product_name
   </sql>
   <select id="selectByExample" parameterType="com.zdjy.bigdata.antun.domain.UserExample" resultMap="BaseResultMap">
     select
@@ -128,16 +128,16 @@
     </selectKey>
     insert into user (gmt_create, gmt_modified, status, 
       name, sex, phone, birth, 
-      idNo, province, provinceName, 
-      city, cityName, town, 
-      townName, channelCode, channelName, 
-      productCode, productName)
+      id_no, province, province_name, 
+      city, city_name, town, 
+      town_name, channel_code, channel_name, 
+      product_code, product_name)
     values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
       #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{birth,jdbcType=VARCHAR}, 
-      #{idno,jdbcType=VARCHAR}, #{province,jdbcType=INTEGER}, #{provincename,jdbcType=VARCHAR}, 
-      #{city,jdbcType=INTEGER}, #{cityname,jdbcType=VARCHAR}, #{town,jdbcType=INTEGER}, 
-      #{townname,jdbcType=VARCHAR}, #{channelcode,jdbcType=VARCHAR}, #{channelname,jdbcType=VARCHAR}, 
-      #{productcode,jdbcType=VARCHAR}, #{productname,jdbcType=VARCHAR})
+      #{idNo,jdbcType=VARCHAR}, #{province,jdbcType=INTEGER}, #{provinceName,jdbcType=VARCHAR}, 
+      #{city,jdbcType=INTEGER}, #{cityName,jdbcType=VARCHAR}, #{town,jdbcType=INTEGER}, 
+      #{townName,jdbcType=VARCHAR}, #{channelCode,jdbcType=VARCHAR}, #{channelName,jdbcType=VARCHAR}, 
+      #{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zdjy.bigdata.antun.domain.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -166,38 +166,38 @@
       <if test="birth != null">
         birth,
       </if>
-      <if test="idno != null">
-        idNo,
+      <if test="idNo != null">
+        id_no,
       </if>
       <if test="province != null">
         province,
       </if>
-      <if test="provincename != null">
-        provinceName,
+      <if test="provinceName != null">
+        province_name,
       </if>
       <if test="city != null">
         city,
       </if>
-      <if test="cityname != null">
-        cityName,
+      <if test="cityName != null">
+        city_name,
       </if>
       <if test="town != null">
         town,
       </if>
-      <if test="townname != null">
-        townName,
+      <if test="townName != null">
+        town_name,
       </if>
-      <if test="channelcode != null">
-        channelCode,
+      <if test="channelCode != null">
+        channel_code,
       </if>
-      <if test="channelname != null">
-        channelName,
+      <if test="channelName != null">
+        channel_name,
       </if>
-      <if test="productcode != null">
-        productCode,
+      <if test="productCode != null">
+        product_code,
       </if>
-      <if test="productname != null">
-        productName,
+      <if test="productName != null">
+        product_name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -222,38 +222,38 @@
       <if test="birth != null">
         #{birth,jdbcType=VARCHAR},
       </if>
-      <if test="idno != null">
-        #{idno,jdbcType=VARCHAR},
+      <if test="idNo != null">
+        #{idNo,jdbcType=VARCHAR},
       </if>
       <if test="province != null">
         #{province,jdbcType=INTEGER},
       </if>
-      <if test="provincename != null">
-        #{provincename,jdbcType=VARCHAR},
+      <if test="provinceName != null">
+        #{provinceName,jdbcType=VARCHAR},
       </if>
       <if test="city != null">
         #{city,jdbcType=INTEGER},
       </if>
-      <if test="cityname != null">
-        #{cityname,jdbcType=VARCHAR},
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
       </if>
       <if test="town != null">
         #{town,jdbcType=INTEGER},
       </if>
-      <if test="townname != null">
-        #{townname,jdbcType=VARCHAR},
+      <if test="townName != null">
+        #{townName,jdbcType=VARCHAR},
       </if>
-      <if test="channelcode != null">
-        #{channelcode,jdbcType=VARCHAR},
+      <if test="channelCode != null">
+        #{channelCode,jdbcType=VARCHAR},
       </if>
-      <if test="channelname != null">
-        #{channelname,jdbcType=VARCHAR},
+      <if test="channelName != null">
+        #{channelName,jdbcType=VARCHAR},
       </if>
-      <if test="productcode != null">
-        #{productcode,jdbcType=VARCHAR},
+      <if test="productCode != null">
+        #{productCode,jdbcType=VARCHAR},
       </if>
-      <if test="productname != null">
-        #{productname,jdbcType=VARCHAR},
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -290,38 +290,38 @@
       <if test="record.birth != null">
         birth = #{record.birth,jdbcType=VARCHAR},
       </if>
-      <if test="record.idno != null">
-        idNo = #{record.idno,jdbcType=VARCHAR},
+      <if test="record.idNo != null">
+        id_no = #{record.idNo,jdbcType=VARCHAR},
       </if>
       <if test="record.province != null">
         province = #{record.province,jdbcType=INTEGER},
       </if>
-      <if test="record.provincename != null">
-        provinceName = #{record.provincename,jdbcType=VARCHAR},
+      <if test="record.provinceName != null">
+        province_name = #{record.provinceName,jdbcType=VARCHAR},
       </if>
       <if test="record.city != null">
         city = #{record.city,jdbcType=INTEGER},
       </if>
-      <if test="record.cityname != null">
-        cityName = #{record.cityname,jdbcType=VARCHAR},
+      <if test="record.cityName != null">
+        city_name = #{record.cityName,jdbcType=VARCHAR},
       </if>
       <if test="record.town != null">
         town = #{record.town,jdbcType=INTEGER},
       </if>
-      <if test="record.townname != null">
-        townName = #{record.townname,jdbcType=VARCHAR},
+      <if test="record.townName != null">
+        town_name = #{record.townName,jdbcType=VARCHAR},
       </if>
-      <if test="record.channelcode != null">
-        channelCode = #{record.channelcode,jdbcType=VARCHAR},
+      <if test="record.channelCode != null">
+        channel_code = #{record.channelCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.channelname != null">
-        channelName = #{record.channelname,jdbcType=VARCHAR},
+      <if test="record.channelName != null">
+        channel_name = #{record.channelName,jdbcType=VARCHAR},
       </if>
-      <if test="record.productcode != null">
-        productCode = #{record.productcode,jdbcType=VARCHAR},
+      <if test="record.productCode != null">
+        product_code = #{record.productCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.productname != null">
-        productName = #{record.productname,jdbcType=VARCHAR},
+      <if test="record.productName != null">
+        product_name = #{record.productName,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -338,17 +338,17 @@
       sex = #{record.sex,jdbcType=INTEGER},
       phone = #{record.phone,jdbcType=VARCHAR},
       birth = #{record.birth,jdbcType=VARCHAR},
-      idNo = #{record.idno,jdbcType=VARCHAR},
+      id_no = #{record.idNo,jdbcType=VARCHAR},
       province = #{record.province,jdbcType=INTEGER},
-      provinceName = #{record.provincename,jdbcType=VARCHAR},
+      province_name = #{record.provinceName,jdbcType=VARCHAR},
       city = #{record.city,jdbcType=INTEGER},
-      cityName = #{record.cityname,jdbcType=VARCHAR},
+      city_name = #{record.cityName,jdbcType=VARCHAR},
       town = #{record.town,jdbcType=INTEGER},
-      townName = #{record.townname,jdbcType=VARCHAR},
-      channelCode = #{record.channelcode,jdbcType=VARCHAR},
-      channelName = #{record.channelname,jdbcType=VARCHAR},
-      productCode = #{record.productcode,jdbcType=VARCHAR},
-      productName = #{record.productname,jdbcType=VARCHAR}
+      town_name = #{record.townName,jdbcType=VARCHAR},
+      channel_code = #{record.channelCode,jdbcType=VARCHAR},
+      channel_name = #{record.channelName,jdbcType=VARCHAR},
+      product_code = #{record.productCode,jdbcType=VARCHAR},
+      product_name = #{record.productName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -377,38 +377,38 @@
       <if test="birth != null">
         birth = #{birth,jdbcType=VARCHAR},
       </if>
-      <if test="idno != null">
-        idNo = #{idno,jdbcType=VARCHAR},
+      <if test="idNo != null">
+        id_no = #{idNo,jdbcType=VARCHAR},
       </if>
       <if test="province != null">
         province = #{province,jdbcType=INTEGER},
       </if>
-      <if test="provincename != null">
-        provinceName = #{provincename,jdbcType=VARCHAR},
+      <if test="provinceName != null">
+        province_name = #{provinceName,jdbcType=VARCHAR},
       </if>
       <if test="city != null">
         city = #{city,jdbcType=INTEGER},
       </if>
-      <if test="cityname != null">
-        cityName = #{cityname,jdbcType=VARCHAR},
+      <if test="cityName != null">
+        city_name = #{cityName,jdbcType=VARCHAR},
       </if>
       <if test="town != null">
         town = #{town,jdbcType=INTEGER},
       </if>
-      <if test="townname != null">
-        townName = #{townname,jdbcType=VARCHAR},
+      <if test="townName != null">
+        town_name = #{townName,jdbcType=VARCHAR},
       </if>
-      <if test="channelcode != null">
-        channelCode = #{channelcode,jdbcType=VARCHAR},
+      <if test="channelCode != null">
+        channel_code = #{channelCode,jdbcType=VARCHAR},
       </if>
-      <if test="channelname != null">
-        channelName = #{channelname,jdbcType=VARCHAR},
+      <if test="channelName != null">
+        channel_name = #{channelName,jdbcType=VARCHAR},
       </if>
-      <if test="productcode != null">
-        productCode = #{productcode,jdbcType=VARCHAR},
+      <if test="productCode != null">
+        product_code = #{productCode,jdbcType=VARCHAR},
       </if>
-      <if test="productname != null">
-        productName = #{productname,jdbcType=VARCHAR},
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -422,17 +422,17 @@
       sex = #{sex,jdbcType=INTEGER},
       phone = #{phone,jdbcType=VARCHAR},
       birth = #{birth,jdbcType=VARCHAR},
-      idNo = #{idno,jdbcType=VARCHAR},
+      id_no = #{idNo,jdbcType=VARCHAR},
       province = #{province,jdbcType=INTEGER},
-      provinceName = #{provincename,jdbcType=VARCHAR},
+      province_name = #{provinceName,jdbcType=VARCHAR},
       city = #{city,jdbcType=INTEGER},
-      cityName = #{cityname,jdbcType=VARCHAR},
+      city_name = #{cityName,jdbcType=VARCHAR},
       town = #{town,jdbcType=INTEGER},
-      townName = #{townname,jdbcType=VARCHAR},
-      channelCode = #{channelcode,jdbcType=VARCHAR},
-      channelName = #{channelname,jdbcType=VARCHAR},
-      productCode = #{productcode,jdbcType=VARCHAR},
-      productName = #{productname,jdbcType=VARCHAR}
+      town_name = #{townName,jdbcType=VARCHAR},
+      channel_code = #{channelCode,jdbcType=VARCHAR},
+      channel_name = #{channelName,jdbcType=VARCHAR},
+      product_code = #{productCode,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

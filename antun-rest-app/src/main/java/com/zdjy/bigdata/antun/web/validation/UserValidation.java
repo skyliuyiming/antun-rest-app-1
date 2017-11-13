@@ -1,8 +1,15 @@
 package com.zdjy.bigdata.antun.web.validation;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zdjy.bigdata.antun.domain.Channel;
+import com.zdjy.bigdata.antun.domain.Product;
+import com.zdjy.bigdata.antun.domain.User;
+import com.zdjy.bigdata.antun.service.ChannelService;
+import com.zdjy.bigdata.antun.service.ProductService;
+import com.zdjy.bigdata.antun.service.UserService;
 import com.zdjy.bigdata.antun.web.model.UserAdd;
 
 /**
@@ -12,6 +19,12 @@ import com.zdjy.bigdata.antun.web.model.UserAdd;
  */
 @Component
 public class UserValidation extends BaseValidation{
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private ChannelService channelService;
+	@Autowired
+	private ProductService productService;
 	/**
 	 * 保存验证
 	 * @param userAdd
@@ -33,7 +46,11 @@ public class UserValidation extends BaseValidation{
 			return "性别格式不正确，只能是0或者1";
 		if(StringUtils.isBlank(userAdd.getBirth()))
 			return empty("生日");
-		if(isIdNo(userAdd.getIdNo()))
+		if(!isBirth(userAdd.getBirth()))
+			return "出生日期格式不正确，正确的例子是：1991-04-17";
+		if(StringUtils.isBlank(userAdd.getIdNo()))
+			return empty("身份证号");
+		if(!isIdNo(userAdd.getIdNo()))
 			return empty("身份证号格式不正确，前17位只能是数字，最后一位可以是数字和x和X");
 		if(userAdd.getProvince()==null)
 			return empty("省份");
@@ -48,15 +65,27 @@ public class UserValidation extends BaseValidation{
 		//验证省市县
 		
 		//验证渠道
-		
+		Channel channel=channelService.findByCode(userAdd.getChannelCode());
+		if(channel==null)
+			return "渠道不存在";
+		if(channel.getStatus()==null||channel.getStatus()!=1)
+			return "该渠道暂时不允许数据入库";
+		userAdd.setChannelName(channel.getName());
 		//验证产品
-		
+		Product product=productService.findByCode(userAdd.getProductCode());
+		if(product==null)
+			return "产品不存在";
+		if(product.getStatus()==null||product.getStatus()!=1)
+			return "该产品暂时不允许数据入库";
+		userAdd.setProductName(product.getName());
 		//去重
-				
+		User user=userService.findByPhone(userAdd.getPhone());
+		if(user!=null)
+			return exist("手机号");
 		return null;
 	}
 	
-	private static final String NAME_PATTERN="^[u4e00-u9fa5]{2-5}$";
+	private static final String NAME_PATTERN="[\\u4e00-\\u9fa5]{2,5}";
 	/**
 	 * 验证是否是姓名
 	 * @param name
@@ -65,7 +94,7 @@ public class UserValidation extends BaseValidation{
 	public boolean isName(String name) {
 		return name.matches(NAME_PATTERN);
 	}
-	private static final String PHONE_PATTERN="^\\d{11}$";
+	private static final String PHONE_PATTERN="\\d{11}";
 	/**
 	 * 验证是否是手机号
 	 * @param phone
@@ -74,7 +103,16 @@ public class UserValidation extends BaseValidation{
 	public boolean isPhone(String phone) {
 		return phone.matches(PHONE_PATTERN);
 	}
-	private static final String IDNO_PATTERN="^\\d{17}[0-9xX]$";
+	private static final String BIRTH_PATTERN="\\d{4}-\\d{2}-\\d{2}";
+	/**
+	 * 验证是否是生日
+	 * @param idNo
+	 * @return
+	 */
+	public boolean isBirth(String birth) {
+		return birth.matches(BIRTH_PATTERN);
+	}
+	private static final String IDNO_PATTERN="\\d{17}[0-9xX]";
 	/**
 	 * 验证是否是身份证号
 	 * @param idNo
