@@ -12,11 +12,21 @@ import com.zdjy.bigdata.antun.domain.Area;
 import com.zdjy.bigdata.antun.service.AreaService;
 import com.zdjy.bigdata.antun.web.response.BaseResponse;
 
+/**
+ * 地区接口
+ * @author david
+ * @create 2017年11月13日 下午4:54:39
+ */
 @RestController
 @RequestMapping("/areas")
 public class AreaController extends BaseResponse{
 	@Autowired
 	private AreaService areaService;
+	/**
+	 * 父级id查询
+	 * @param parentId
+	 * @return
+	 */
 	@RequestMapping(value="/{parentId}",method=RequestMethod.GET)
 	public BaseResponse findByParentId(@PathVariable Long parentId) {
 		List<Area> areas=areaService.findByParentId(parentId);
