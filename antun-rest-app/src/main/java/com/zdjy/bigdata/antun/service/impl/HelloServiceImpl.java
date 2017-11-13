@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zdjy.bigdata.antun.domain.Hello;
 import com.zdjy.bigdata.antun.domain.HelloExample;
@@ -41,6 +42,7 @@ public class HelloServiceImpl implements HelloService {
 	 * @return
 	 */
 	@Override
+	@Transactional
 	public int saveHello(HelloAdd helloAdd) {
 		Hello transfer = transfer(helloAdd);
 		return helloMapper.insertSelective(transfer);
@@ -52,6 +54,7 @@ public class HelloServiceImpl implements HelloService {
 	 * @return
 	 */
 	@Override
+	@Transactional
 	public int deleteHello(Long id) {
 		return helloMapper.deleteByPrimaryKey(id);
 	}
@@ -63,6 +66,7 @@ public class HelloServiceImpl implements HelloService {
 	 * @return
 	 */
 	@Override
+	@Transactional
 	public int updateHello(Long id, HelloUpdate helloUpdate) {
 		Hello transfer = transfer(helloUpdate);
 		transfer.setId(id);
