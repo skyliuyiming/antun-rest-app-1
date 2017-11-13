@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdjy.bigdata.antun.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.zdjy.bigdata.antun.domain.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="birth" jdbcType="VARCHAR" property="birth" />
+    <result column="idNo" jdbcType="VARCHAR" property="idno" />
+    <result column="province" jdbcType="INTEGER" property="province" />
+    <result column="provinceName" jdbcType="VARCHAR" property="provincename" />
+    <result column="city" jdbcType="INTEGER" property="city" />
+    <result column="cityName" jdbcType="VARCHAR" property="cityname" />
+    <result column="town" jdbcType="INTEGER" property="town" />
+    <result column="townName" jdbcType="VARCHAR" property="townname" />
+    <result column="channelCode" jdbcType="VARCHAR" property="channelcode" />
+    <result column="channelName" jdbcType="VARCHAR" property="channelname" />
+    <result column="productCode" jdbcType="VARCHAR" property="productcode" />
+    <result column="productName" jdbcType="VARCHAR" property="productname" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, gmt_create, gmt_modified, status, name, sex, phone, birth, idNo, province, provinceName, 
+    city, cityName, town, townName, channelCode, channelName, productCode, productName
+  </sql>
+  <select id="selectByExample" parameterType="com.zdjy.bigdata.antun.domain.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zdjy.bigdata.antun.domain.UserExample">
+    delete from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zdjy.bigdata.antun.domain.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (gmt_create, gmt_modified, status, 
+      name, sex, phone, birth, 
+      idNo, province, provinceName, 
+      city, cityName, town, 
+      townName, channelCode, channelName, 
+      productCode, productName)
+    values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{birth,jdbcType=VARCHAR}, 
+      #{idno,jdbcType=VARCHAR}, #{province,jdbcType=INTEGER}, #{provincename,jdbcType=VARCHAR}, 
+      #{city,jdbcType=INTEGER}, #{cityname,jdbcType=VARCHAR}, #{town,jdbcType=INTEGER}, 
+      #{townname,jdbcType=VARCHAR}, #{channelcode,jdbcType=VARCHAR}, #{channelname,jdbcType=VARCHAR}, 
+      #{productcode,jdbcType=VARCHAR}, #{productname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zdjy.bigdata.antun.domain.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="birth != null">
+        birth,
+      </if>
+      <if test="idno != null">
+        idNo,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="provincename != null">
+        provinceName,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="cityname != null">
+        cityName,
+      </if>
+      <if test="town != null">
+        town,
+      </if>
+      <if test="townname != null">
+        townName,
+      </if>
+      <if test="channelcode != null">
+        channelCode,
+      </if>
+      <if test="channelname != null">
+        channelName,
+      </if>
+      <if test="productcode != null">
+        productCode,
+      </if>
+      <if test="productname != null">
+        productName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null">
+        #{birth,jdbcType=VARCHAR},
+      </if>
+      <if test="idno != null">
+        #{idno,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=INTEGER},
+      </if>
+      <if test="provincename != null">
+        #{provincename,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=INTEGER},
+      </if>
+      <if test="cityname != null">
+        #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="town != null">
+        #{town,jdbcType=INTEGER},
+      </if>
+      <if test="townname != null">
+        #{townname,jdbcType=VARCHAR},
+      </if>
+      <if test="channelcode != null">
+        #{channelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="channelname != null">
+        #{channelname,jdbcType=VARCHAR},
+      </if>
+      <if test="productcode != null">
+        #{productcode,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null">
+        #{productname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zdjy.bigdata.antun.domain.UserExample" resultType="java.lang.Long">
+    select count(*) from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null">
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birth != null">
+        birth = #{record.birth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idno != null">
+        idNo = #{record.idno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=INTEGER},
+      </if>
+      <if test="record.provincename != null">
+        provinceName = #{record.provincename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityname != null">
+        cityName = #{record.cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.town != null">
+        town = #{record.town,jdbcType=INTEGER},
+      </if>
+      <if test="record.townname != null">
+        townName = #{record.townname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelcode != null">
+        channelCode = #{record.channelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelname != null">
+        channelName = #{record.channelname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productcode != null">
+        productCode = #{record.productcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productname != null">
+        productName = #{record.productname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user
+    set id = #{record.id,jdbcType=BIGINT},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      birth = #{record.birth,jdbcType=VARCHAR},
+      idNo = #{record.idno,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=INTEGER},
+      provinceName = #{record.provincename,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=INTEGER},
+      cityName = #{record.cityname,jdbcType=VARCHAR},
+      town = #{record.town,jdbcType=INTEGER},
+      townName = #{record.townname,jdbcType=VARCHAR},
+      channelCode = #{record.channelcode,jdbcType=VARCHAR},
+      channelName = #{record.channelname,jdbcType=VARCHAR},
+      productCode = #{record.productcode,jdbcType=VARCHAR},
+      productName = #{record.productname,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zdjy.bigdata.antun.domain.User">
+    update user
+    <set>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null">
+        birth = #{birth,jdbcType=VARCHAR},
+      </if>
+      <if test="idno != null">
+        idNo = #{idno,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=INTEGER},
+      </if>
+      <if test="provincename != null">
+        provinceName = #{provincename,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=INTEGER},
+      </if>
+      <if test="cityname != null">
+        cityName = #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="town != null">
+        town = #{town,jdbcType=INTEGER},
+      </if>
+      <if test="townname != null">
+        townName = #{townname,jdbcType=VARCHAR},
+      </if>
+      <if test="channelcode != null">
+        channelCode = #{channelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="channelname != null">
+        channelName = #{channelname,jdbcType=VARCHAR},
+      </if>
+      <if test="productcode != null">
+        productCode = #{productcode,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null">
+        productName = #{productname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zdjy.bigdata.antun.domain.User">
+    update user
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=VARCHAR},
+      idNo = #{idno,jdbcType=VARCHAR},
+      province = #{province,jdbcType=INTEGER},
+      provinceName = #{provincename,jdbcType=VARCHAR},
+      city = #{city,jdbcType=INTEGER},
+      cityName = #{cityname,jdbcType=VARCHAR},
+      town = #{town,jdbcType=INTEGER},
+      townName = #{townname,jdbcType=VARCHAR},
+      channelCode = #{channelcode,jdbcType=VARCHAR},
+      channelName = #{channelname,jdbcType=VARCHAR},
+      productCode = #{productcode,jdbcType=VARCHAR},
+      productName = #{productname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
