@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50716
 File Encoding         : 65001
 
-Date: 2017-11-13 16:54:10
+Date: 2017-11-14 14:16:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3217,3 +3217,105 @@ INSERT INTO `area` VALUES ('659001', '2017-11-13 16:41:21', '2017-11-13 16:41:21
 INSERT INTO `area` VALUES ('659002', '2017-11-13 16:41:21', '2017-11-13 16:41:21', '阿拉尔市', '659000', '3');
 INSERT INTO `area` VALUES ('659003', '2017-11-13 16:41:21', '2017-11-13 16:41:21', '图木舒克市', '659000', '3');
 INSERT INTO `area` VALUES ('659004', '2017-11-13 16:41:21', '2017-11-13 16:41:21', '五家渠市', '659000', '3');
+
+-- ----------------------------
+-- Table structure for channel
+-- ----------------------------
+DROP TABLE IF EXISTS `channel`;
+CREATE TABLE `channel` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '渠道名',
+  `code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '渠道码',
+  `status` int(1) unsigned NOT NULL DEFAULT '1' COMMENT '渠道状态（1：启用，0：禁用）',
+  `description` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '渠道描述信息',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of channel
+-- ----------------------------
+INSERT INTO `channel` VALUES ('1', '2017-11-13 14:50:46', '2017-11-13 14:50:46', '测试', 'test_001', '1', '测试渠道');
+
+-- ----------------------------
+-- Table structure for hello
+-- ----------------------------
+DROP TABLE IF EXISTS `hello`;
+CREATE TABLE `hello` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '名字',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of hello
+-- ----------------------------
+INSERT INTO `hello` VALUES ('1', '2017-11-13 11:06:47', '2017-11-13 11:06:47', '你好啊');
+INSERT INTO `hello` VALUES ('2', '2017-11-13 11:06:49', '2017-11-13 11:06:49', '你好啊');
+INSERT INTO `hello` VALUES ('3', '2017-11-13 11:06:49', '2017-11-13 11:06:49', '你好啊');
+INSERT INTO `hello` VALUES ('4', '2017-11-13 11:06:55', '2017-11-13 11:06:55', '123你好');
+INSERT INTO `hello` VALUES ('5', '2017-11-13 11:06:57', '2017-11-13 11:06:57', '1啊啊23你好');
+INSERT INTO `hello` VALUES ('6', '2017-11-13 11:06:58', '2017-11-13 11:06:58', '1啊啊23你好');
+INSERT INTO `hello` VALUES ('7', '2017-11-13 11:07:00', '2017-11-13 11:07:00', '1啊啊231你好');
+INSERT INTO `hello` VALUES ('8', '2017-11-13 11:07:03', '2017-11-13 11:07:03', '1');
+INSERT INTO `hello` VALUES ('9', '2017-11-13 11:07:06', '2017-11-13 11:07:06', '2');
+INSERT INTO `hello` VALUES ('10', '2017-11-13 11:07:09', '2017-11-13 11:07:09', '3');
+
+-- ----------------------------
+-- Table structure for product
+-- ----------------------------
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '产品名',
+  `code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '产品码',
+  `status` int(1) NOT NULL DEFAULT '1' COMMENT '产品状态（1：启用；0：禁用）',
+  PRIMARY KEY (`id`),
+  KEY `code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of product
+-- ----------------------------
+INSERT INTO `product` VALUES ('1', '2017-11-13 14:51:38', '2017-11-13 14:51:38', '出行无忧', 'PA000000CXSF-CXWY-01', '1');
+INSERT INTO `product` VALUES ('2', '2017-11-14 14:02:16', '2017-11-14 14:02:16', '神舟畅行', 'PA000000CXSF-PACXSZ-01', '1');
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `status` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '数据状态（0：默认状态）',
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '姓名',
+  `sex` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '性别（0：女；1：男）',
+  `phone` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '手机号',
+  `birth` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '出生日期',
+  `id_no` varchar(18) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '身份证号',
+  `province` bigint(20) NOT NULL DEFAULT '0' COMMENT '省编号',
+  `province_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '省份名',
+  `city` bigint(20) NOT NULL DEFAULT '0' COMMENT '城市编号',
+  `city_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '城市名',
+  `town` bigint(20) NOT NULL DEFAULT '0' COMMENT '区县编号',
+  `town_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '区县名',
+  `channel_code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '渠道码',
+  `channel_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '渠道名',
+  `product_code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '产品码',
+  `product_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '产品名',
+  PRIMARY KEY (`id`),
+  KEY `phone` (`phone`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('1', '2017-11-14 13:56:34', '2017-11-14 13:56:34', '0', '阿萨德', '1', '18851632205', '2017-11-05', '320125199104081756', '330000', '浙江省', '330500', '湖州市', '330503', '南浔区', 'test_001', '测试', 'PA000000CXSF-CXWY-01', '出行无忧');
+INSERT INTO `user` VALUES ('2', '2017-11-14 14:08:32', '2017-11-14 14:08:32', '0', '杨力谋', '1', '18851645789', '2017-11-13', '320125199104081756', '350000', '福建省', '350400', '三明市', '350426', '尤溪县', 'test_001', '测试', 'PA000000CXSF-PACXSZ-01', '神舟畅行');
