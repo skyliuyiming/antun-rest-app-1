@@ -11,16 +11,18 @@ public class UserAdd {
 	private String phone;
 	private String birth;
 	private String idNo;
-	private Integer province;
-	private Integer city;
-	private Integer town;
+	private Long province;
+	private Long city;
+	private Long town;
 	private String channelCode;
 	private String productCode;
 	
 	//辅助字段
 	private String channelName;
 	private String productName;
-	
+	private String provinceName;
+	private String cityName;
+	private String townName;
 	public String getName() {
 		return name;
 	}
@@ -51,22 +53,22 @@ public class UserAdd {
 	public void setIdNo(String idNo) {
 		this.idNo = idNo;
 	}
-	public Integer getProvince() {
+	public Long getProvince() {
 		return province;
 	}
-	public void setProvince(Integer province) {
+	public void setProvince(Long province) {
 		this.province = province;
 	}
-	public Integer getCity() {
+	public Long getCity() {
 		return city;
 	}
-	public void setCity(Integer city) {
+	public void setCity(Long city) {
 		this.city = city;
 	}
-	public Integer getTown() {
+	public Long getTown() {
 		return town;
 	}
-	public void setTown(Integer town) {
+	public void setTown(Long town) {
 		this.town = town;
 	}
 	public String getChannelCode() {
@@ -93,5 +95,26 @@ public class UserAdd {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+	public String getProvinceName() {
+		return provinceName;
+	}
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
+	public String getCityName() {
+		return cityName;
+	}
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+	public String getTownName() {
+		return townName;
+	}
+	public void setTownName(String townName) {
+		this.townName = townName;
+	}
+	
+	
+	
 	
 }

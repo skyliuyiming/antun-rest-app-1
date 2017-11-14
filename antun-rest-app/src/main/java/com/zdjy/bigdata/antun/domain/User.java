@@ -55,7 +55,7 @@ public class User implements Serializable {
     /**
      * 省编号
      */
-    private Integer province;
+    private Long province;
 
     /**
      * 省份名
@@ -65,7 +65,7 @@ public class User implements Serializable {
     /**
      * 城市编号
      */
-    private Integer city;
+    private Long city;
 
     /**
      * 城市名
@@ -75,7 +75,7 @@ public class User implements Serializable {
     /**
      * 区县编号
      */
-    private Integer town;
+    private Long town;
 
     /**
      * 区县名
@@ -176,11 +176,11 @@ public class User implements Serializable {
         this.idNo = idNo;
     }
 
-    public Integer getProvince() {
+    public Long getProvince() {
         return province;
     }
 
-    public void setProvince(Integer province) {
+    public void setProvince(Long province) {
         this.province = province;
     }
 
@@ -192,11 +192,11 @@ public class User implements Serializable {
         this.provinceName = provinceName;
     }
 
-    public Integer getCity() {
+    public Long getCity() {
         return city;
     }
 
-    public void setCity(Integer city) {
+    public void setCity(Long city) {
         this.city = city;
     }
 
@@ -208,11 +208,11 @@ public class User implements Serializable {
         this.cityName = cityName;
     }
 
-    public Integer getTown() {
+    public Long getTown() {
         return town;
     }
 
-    public void setTown(Integer town) {
+    public void setTown(Long town) {
         this.town = town;
     }
 

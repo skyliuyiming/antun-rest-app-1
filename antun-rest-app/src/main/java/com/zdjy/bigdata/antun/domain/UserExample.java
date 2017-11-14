@@ -715,52 +715,52 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andProvinceEqualTo(Integer value) {
+        public Criteria andProvinceEqualTo(Long value) {
             addCriterion("province =", value, "province");
             return (Criteria) this;
         }
 
-        public Criteria andProvinceNotEqualTo(Integer value) {
+        public Criteria andProvinceNotEqualTo(Long value) {
             addCriterion("province <>", value, "province");
             return (Criteria) this;
         }
 
-        public Criteria andProvinceGreaterThan(Integer value) {
+        public Criteria andProvinceGreaterThan(Long value) {
             addCriterion("province >", value, "province");
             return (Criteria) this;
         }
 
-        public Criteria andProvinceGreaterThanOrEqualTo(Integer value) {
+        public Criteria andProvinceGreaterThanOrEqualTo(Long value) {
             addCriterion("province >=", value, "province");
             return (Criteria) this;
         }
 
-        public Criteria andProvinceLessThan(Integer value) {
+        public Criteria andProvinceLessThan(Long value) {
             addCriterion("province <", value, "province");
             return (Criteria) this;
         }
 
-        public Criteria andProvinceLessThanOrEqualTo(Integer value) {
+        public Criteria andProvinceLessThanOrEqualTo(Long value) {
             addCriterion("province <=", value, "province");
             return (Criteria) this;
         }
 
-        public Criteria andProvinceIn(List<Integer> values) {
+        public Criteria andProvinceIn(List<Long> values) {
             addCriterion("province in", values, "province");
             return (Criteria) this;
         }
 
-        public Criteria andProvinceNotIn(List<Integer> values) {
+        public Criteria andProvinceNotIn(List<Long> values) {
             addCriterion("province not in", values, "province");
             return (Criteria) this;
         }
 
-        public Criteria andProvinceBetween(Integer value1, Integer value2) {
+        public Criteria andProvinceBetween(Long value1, Long value2) {
             addCriterion("province between", value1, value2, "province");
             return (Criteria) this;
         }
 
-        public Criteria andProvinceNotBetween(Integer value1, Integer value2) {
+        public Criteria andProvinceNotBetween(Long value1, Long value2) {
             addCriterion("province not between", value1, value2, "province");
             return (Criteria) this;
         }
@@ -845,52 +845,52 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andCityEqualTo(Integer value) {
+        public Criteria andCityEqualTo(Long value) {
             addCriterion("city =", value, "city");
             return (Criteria) this;
         }
 
-        public Criteria andCityNotEqualTo(Integer value) {
+        public Criteria andCityNotEqualTo(Long value) {
             addCriterion("city <>", value, "city");
             return (Criteria) this;
         }
 
-        public Criteria andCityGreaterThan(Integer value) {
+        public Criteria andCityGreaterThan(Long value) {
             addCriterion("city >", value, "city");
             return (Criteria) this;
         }
 
-        public Criteria andCityGreaterThanOrEqualTo(Integer value) {
+        public Criteria andCityGreaterThanOrEqualTo(Long value) {
             addCriterion("city >=", value, "city");
             return (Criteria) this;
         }
 
-        public Criteria andCityLessThan(Integer value) {
+        public Criteria andCityLessThan(Long value) {
             addCriterion("city <", value, "city");
             return (Criteria) this;
         }
 
-        public Criteria andCityLessThanOrEqualTo(Integer value) {
+        public Criteria andCityLessThanOrEqualTo(Long value) {
             addCriterion("city <=", value, "city");
             return (Criteria) this;
         }
 
-        public Criteria andCityIn(List<Integer> values) {
+        public Criteria andCityIn(List<Long> values) {
             addCriterion("city in", values, "city");
             return (Criteria) this;
         }
 
-        public Criteria andCityNotIn(List<Integer> values) {
+        public Criteria andCityNotIn(List<Long> values) {
             addCriterion("city not in", values, "city");
             return (Criteria) this;
         }
 
-        public Criteria andCityBetween(Integer value1, Integer value2) {
+        public Criteria andCityBetween(Long value1, Long value2) {
             addCriterion("city between", value1, value2, "city");
             return (Criteria) this;
         }
 
-        public Criteria andCityNotBetween(Integer value1, Integer value2) {
+        public Criteria andCityNotBetween(Long value1, Long value2) {
             addCriterion("city not between", value1, value2, "city");
             return (Criteria) this;
         }
@@ -975,52 +975,52 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andTownEqualTo(Integer value) {
+        public Criteria andTownEqualTo(Long value) {
             addCriterion("town =", value, "town");
             return (Criteria) this;
         }
 
-        public Criteria andTownNotEqualTo(Integer value) {
+        public Criteria andTownNotEqualTo(Long value) {
             addCriterion("town <>", value, "town");
             return (Criteria) this;
         }
 
-        public Criteria andTownGreaterThan(Integer value) {
+        public Criteria andTownGreaterThan(Long value) {
             addCriterion("town >", value, "town");
             return (Criteria) this;
         }
 
-        public Criteria andTownGreaterThanOrEqualTo(Integer value) {
+        public Criteria andTownGreaterThanOrEqualTo(Long value) {
             addCriterion("town >=", value, "town");
             return (Criteria) this;
         }
 
-        public Criteria andTownLessThan(Integer value) {
+        public Criteria andTownLessThan(Long value) {
             addCriterion("town <", value, "town");
             return (Criteria) this;
         }
 
-        public Criteria andTownLessThanOrEqualTo(Integer value) {
+        public Criteria andTownLessThanOrEqualTo(Long value) {
             addCriterion("town <=", value, "town");
             return (Criteria) this;
         }
 
-        public Criteria andTownIn(List<Integer> values) {
+        public Criteria andTownIn(List<Long> values) {
             addCriterion("town in", values, "town");
             return (Criteria) this;
         }
 
-        public Criteria andTownNotIn(List<Integer> values) {
+        public Criteria andTownNotIn(List<Long> values) {
             addCriterion("town not in", values, "town");
             return (Criteria) this;
         }
 
-        public Criteria andTownBetween(Integer value1, Integer value2) {
+        public Criteria andTownBetween(Long value1, Long value2) {
             addCriterion("town between", value1, value2, "town");
             return (Criteria) this;
         }
 
-        public Criteria andTownNotBetween(Integer value1, Integer value2) {
+        public Criteria andTownNotBetween(Long value1, Long value2) {
             addCriterion("town not between", value1, value2, "town");
             return (Criteria) this;
         }

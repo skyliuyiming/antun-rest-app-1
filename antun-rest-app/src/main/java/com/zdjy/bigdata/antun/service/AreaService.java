@@ -8,4 +8,6 @@ public interface AreaService {
 
 	List<Area> findByParentId(Long parentId);
 
+	Area findArea(Long id);
+
 }

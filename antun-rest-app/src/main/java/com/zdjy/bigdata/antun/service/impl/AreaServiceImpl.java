@@ -32,4 +32,14 @@ public class AreaServiceImpl implements AreaService {
 		createCriteria.andParentIdEqualTo(parentId);
 		return areaMapper.selectByExample(areaExample);
 	}
+
+	/**
+	 * 根据id查询
+	 * @param province
+	 * @return
+	 */
+	@Override
+	public Area findArea(Long id) {
+		return areaMapper.selectByPrimaryKey(id);
+	}
 }

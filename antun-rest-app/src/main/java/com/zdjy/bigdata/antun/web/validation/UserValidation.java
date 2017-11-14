@@ -4,9 +4,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zdjy.bigdata.antun.domain.Area;
 import com.zdjy.bigdata.antun.domain.Channel;
 import com.zdjy.bigdata.antun.domain.Product;
 import com.zdjy.bigdata.antun.domain.User;
+import com.zdjy.bigdata.antun.service.AreaService;
 import com.zdjy.bigdata.antun.service.ChannelService;
 import com.zdjy.bigdata.antun.service.ProductService;
 import com.zdjy.bigdata.antun.service.UserService;
@@ -25,6 +27,8 @@ public class UserValidation extends BaseValidation{
 	private ChannelService channelService;
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private AreaService areaService;
 	/**
 	 * 保存验证
 	 * @param userAdd
@@ -63,7 +67,22 @@ public class UserValidation extends BaseValidation{
 		if(StringUtils.isBlank(userAdd.getProductCode()))
 			return empty("产品码");
 		//验证省市县
-		
+		Area town=areaService.findArea(userAdd.getTown());
+		if(town==null)
+			return "区县不存在";
+		userAdd.setTownName(town.getName());
+		if(town.getParentId().longValue()!=userAdd.getCity().longValue())
+			return "区县和城市对不上";
+		Area city=areaService.findArea(userAdd.getCity());
+		if(city==null)
+			return "城市不存在";
+		userAdd.setCityName(city.getName());
+		if(city.getParentId().longValue()!=userAdd.getProvince().longValue())
+			return "城市和省份对不上";
+		Area province=areaService.findArea(userAdd.getProvince());
+		if(province==null)
+			return "省份不存在";
+		userAdd.setProvinceName(province.getName());
 		//验证渠道
 		Channel channel=channelService.findByCode(userAdd.getChannelCode());
 		if(channel==null)
