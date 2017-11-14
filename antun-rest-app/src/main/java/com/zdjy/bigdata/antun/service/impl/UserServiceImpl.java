@@ -11,7 +11,7 @@ import com.zdjy.bigdata.antun.domain.UserExample;
 import com.zdjy.bigdata.antun.domain.UserExample.Criteria;
 import com.zdjy.bigdata.antun.domain.UserSending;
 import com.zdjy.bigdata.antun.mapper.UserMapper;
-import com.zdjy.bigdata.antun.remote.PingAnSending.Response;
+import com.zdjy.bigdata.antun.remote.Response;
 import com.zdjy.bigdata.antun.service.UserSendingService;
 import com.zdjy.bigdata.antun.service.UserService;
 import com.zdjy.bigdata.antun.util.CodeGenerateUtils;

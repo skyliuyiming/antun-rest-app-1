@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.zdjy.bigdata.antun.domain.User;
 import com.zdjy.bigdata.antun.remote.PingAnSending;
-import com.zdjy.bigdata.antun.remote.PingAnSending.Response;
+import com.zdjy.bigdata.antun.remote.Response;
 import com.zdjy.bigdata.antun.service.UserService;
 
 /**

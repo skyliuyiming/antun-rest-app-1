@@ -1,5 +1,7 @@
 package com.zdjy.bigdata.antun.web.model;
 
+import com.google.gson.Gson;
+
 /**
  * 用户新增参数封装类
  * @author david
@@ -113,7 +115,10 @@ public class UserAdd {
 	public void setTownName(String townName) {
 		this.townName = townName;
 	}
-	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
+	}
 	
 	
 	

@@ -1,5 +1,7 @@
 package com.zdjy.bigdata.antun.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,12 +20,14 @@ import com.zdjy.bigdata.antun.web.validation.UserValidation;
 @RestController
 @RequestMapping("/users")
 public class UserController extends BaseResponse{
+	private Logger logger = LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private UserValidation userValidation;
 	@RequestMapping(value="",method=RequestMethod.POST)
 	public BaseResponse saveUser(UserAdd userAdd) {
+		logger.debug("【user_add】"+userAdd.toString());
 		String msg=userValidation.saveUserValidation(userAdd);
 		if(msg!=null)
 			return errorModel(msg);

@@ -3,7 +3,7 @@ package com.zdjy.bigdata.antun.service;
 import java.util.List;
 
 import com.zdjy.bigdata.antun.domain.User;
-import com.zdjy.bigdata.antun.remote.PingAnSending.Response;
+import com.zdjy.bigdata.antun.remote.Response;
 import com.zdjy.bigdata.antun.web.model.UserAdd;
 
 public interface UserService {

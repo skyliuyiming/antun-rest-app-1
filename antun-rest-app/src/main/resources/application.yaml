@@ -22,7 +22,7 @@ logging:
     root: info
     com.zdjy.bigdata.antun.scheduler.PingAnSendingScheduler: debug
     com.zdjy.bigdata.antun.remote.PingAnSending: debug
-    
+    com.zdjy.bigdata.antun.web.UserController: debug
 pingan:
   sending:
     url: http://47.94.250.65/pinganjiekou/user/add
