@@ -21,6 +21,7 @@
     <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
     <result column="product_code" jdbcType="VARCHAR" property="productCode" />
     <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -82,7 +83,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, gmt_create, gmt_modified, status, name, sex, phone, birth, id_no, province, province_name, 
-    city, city_name, town, town_name, channel_code, channel_name, product_code, product_name
+    city, city_name, town, town_name, channel_code, channel_name, product_code, product_name, 
+    code
   </sql>
   <select id="selectByExample" parameterType="com.zdjy.bigdata.antun.domain.UserExample" resultMap="BaseResultMap">
     select
@@ -131,13 +133,15 @@
       id_no, province, province_name, 
       city, city_name, town, 
       town_name, channel_code, channel_name, 
-      product_code, product_name)
+      product_code, product_name, code
+      )
     values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
       #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{birth,jdbcType=VARCHAR}, 
       #{idNo,jdbcType=VARCHAR}, #{province,jdbcType=BIGINT}, #{provinceName,jdbcType=VARCHAR}, 
       #{city,jdbcType=BIGINT}, #{cityName,jdbcType=VARCHAR}, #{town,jdbcType=BIGINT}, 
       #{townName,jdbcType=VARCHAR}, #{channelCode,jdbcType=VARCHAR}, #{channelName,jdbcType=VARCHAR}, 
-      #{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR})
+      #{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zdjy.bigdata.antun.domain.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -199,6 +203,9 @@
       <if test="productName != null">
         product_name,
       </if>
+      <if test="code != null">
+        code,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="gmtCreate != null">
@@ -254,6 +261,9 @@
       </if>
       <if test="productName != null">
         #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -323,6 +333,9 @@
       <if test="record.productName != null">
         product_name = #{record.productName,jdbcType=VARCHAR},
       </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -348,7 +361,8 @@
       channel_code = #{record.channelCode,jdbcType=VARCHAR},
       channel_name = #{record.channelName,jdbcType=VARCHAR},
       product_code = #{record.productCode,jdbcType=VARCHAR},
-      product_name = #{record.productName,jdbcType=VARCHAR}
+      product_name = #{record.productName,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -410,6 +424,9 @@
       <if test="productName != null">
         product_name = #{productName,jdbcType=VARCHAR},
       </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -432,7 +449,8 @@
       channel_code = #{channelCode,jdbcType=VARCHAR},
       channel_name = #{channelName,jdbcType=VARCHAR},
       product_code = #{productCode,jdbcType=VARCHAR},
-      product_name = #{productName,jdbcType=VARCHAR}
+      product_name = #{productName,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

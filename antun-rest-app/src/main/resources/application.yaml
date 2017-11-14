@@ -16,3 +16,15 @@ mybatis:
   mapper-locations: mapper/*.xml
   type-aliases-package: com.zdjy.bigdata.antun.mapper
   type-handlers-package: org.apache.ibatis.type.LocalDateTypeHandler
+  
+logging:
+  level:
+    root: info
+    com.zdjy.bigdata.antun.scheduler.PingAnSendingScheduler: debug
+    com.zdjy.bigdata.antun.remote.PingAnSending: debug
+    
+pingan:
+  sending:
+    url: http://47.94.250.65/pinganjiekou/user/add
+    channelCode: afangti_zhangrui_001
+    channelToken: 26246952-113-11343-3510060-1131-46-46-91114

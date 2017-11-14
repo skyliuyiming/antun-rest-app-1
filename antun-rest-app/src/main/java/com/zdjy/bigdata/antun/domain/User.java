@@ -102,6 +102,11 @@ public class User implements Serializable {
      */
     private String productName;
 
+    /**
+     * 编码
+     */
+    private String code;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -254,5 +259,13 @@ public class User implements Serializable {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
