@@ -8,6 +8,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, gmt_create, gmt_modified, name, code, status
+    id, gmt_create, gmt_modified, name, code, status, description
   </sql>
   <select id="selectByExample" parameterType="com.zdjy.bigdata.antun.domain.ProductExample" resultMap="BaseResultMap">
     select
@@ -113,9 +114,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into product (gmt_create, gmt_modified, name, 
-      code, status)
+      code, status, description
+      )
     values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, 
-      #{code,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+      #{code,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zdjy.bigdata.antun.domain.Product">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -138,6 +141,9 @@
       <if test="status != null">
         status,
       </if>
+      <if test="description != null">
+        description,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="gmtCreate != null">
@@ -154,6 +160,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -184,6 +193,9 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
       </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -196,7 +208,8 @@
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       name = #{record.name,jdbcType=VARCHAR},
       code = #{record.code,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=INTEGER}
+      status = #{record.status,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -219,6 +232,9 @@
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -228,7 +244,8 @@
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       name = #{name,jdbcType=VARCHAR},
       code = #{code,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER}
+      status = #{status,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

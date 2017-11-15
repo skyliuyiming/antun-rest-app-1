@@ -11,13 +11,15 @@ import com.zdjy.bigdata.antun.domain.ProductExample.Criteria;
 import com.zdjy.bigdata.antun.mapper.ProductMapper;
 import com.zdjy.bigdata.antun.service.ProductService;
 import com.zdjy.bigdata.antun.util.EsapiUtil;
+import com.zdjy.bigdata.antun.util.TransferUtil;
+import com.zdjy.bigdata.antun.web.model.ProductAdd;
+import com.zdjy.bigdata.antun.web.model.ProductUpdate;
 /**
  * 产品业务类
  * @author david
- * @create 2017年11月13日 下午2:49:09
+ * @create 2017年11月13日 下午2:48:27
  */
 @Service
-
 public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductMapper productMapper;
@@ -37,5 +39,95 @@ public class ProductServiceImpl implements ProductService {
 		if(!selectByExample.isEmpty())
 			return selectByExample.get(0);
 		return null;
+	}
+
+	@Override
+	public List<Product> findAll() {
+		ProductExample productExample = new ProductExample();
+		productExample.setOrderByClause("status,id desc");
+		return productMapper.selectByExample(productExample);
+	}
+
+	/**
+	 * 修改状态
+	 * @param id
+	 * @param status
+	 * @return
+	 */
+	@Override
+	public int updateStatus(Long id, Integer status) {
+		Product product = new Product();
+		product.setId(id);
+		product.setStatus(status);
+		return productMapper.updateByPrimaryKeySelective(product);
+	}
+
+	/**
+	 * 保存产品
+	 * @param productAdd
+	 * @return
+	 */
+	@Override
+	public int saveProduct(ProductAdd productAdd) {
+		Product transfer = transfer(productAdd);
+		return productMapper.insertSelective(transfer);
+	}
+	
+	
+	/**
+	 * 新增类与领域类的转换
+	 * 
+	 * @param productAdd
+	 * @return
+	 */
+	public Product transfer(ProductAdd productAdd) {
+		Product product = new Product();
+		TransferUtil.transfer(product, productAdd);
+		return product;
+	}
+	
+	/**
+	 * 新增类与领域类的转换
+	 * 
+	 * @param productUpdate
+	 * @return
+	 */
+	public Product transfer(ProductUpdate productUpdate) {
+		Product product = new Product();
+		TransferUtil.transfer(product, productUpdate);
+		return product;
+	}
+
+	/**
+	 * 删除
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public int deleteProduct(Long id) {
+		return productMapper.deleteByPrimaryKey(id);
+	}
+
+	/**
+	 * 修改
+	 * @param id
+	 * @param productUpdate
+	 * @return
+	 */
+	@Override
+	public int updateProduct(Long id, ProductUpdate productUpdate) {
+		Product transfer = transfer(productUpdate);
+		transfer.setId(id);
+		return productMapper.updateByPrimaryKeySelective(transfer);
+	}
+
+	/**
+	 * id查询
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public Product getProduct(Long id) {
+		return productMapper.selectByPrimaryKey(id);
 	}
 }

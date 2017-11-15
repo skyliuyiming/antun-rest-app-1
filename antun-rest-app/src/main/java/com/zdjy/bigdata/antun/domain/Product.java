@@ -37,6 +37,11 @@ public class Product implements Serializable {
      */
     private Integer status;
 
+    /**
+     * 产品描述信息
+     */
+    private String description;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -85,5 +90,13 @@ public class Product implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
