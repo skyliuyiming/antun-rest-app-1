@@ -22,4 +22,6 @@ public interface ProductService {
 
 	Product getProduct(Long id);
 
+	List<Product> findByStatus(Integer status);
+
 }

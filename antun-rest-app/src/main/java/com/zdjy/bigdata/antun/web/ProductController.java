@@ -27,11 +27,21 @@ public class ProductController extends BaseResponse{
 	private ProductValidation productValidation;
 	@Autowired
 	private ProductService productService;
+	/**
+	 * 查询全部
+	 * @return
+	 */
 	@RequestMapping(value="",method=RequestMethod.GET)
 	public BaseResponse findAll() {
 		List<Product> products=productService.findAll();
 		return successModel("查询全部成功").data(products);
 	}
+	/**
+	 * 修改状态
+	 * @param id
+	 * @param status
+	 * @return
+	 */
 	@RequestMapping(value="/{id}/updateStatus",method=RequestMethod.PUT)
 	public BaseResponse updateStatus(@PathVariable Long id,Integer status) {
 		String msg=productValidation.updateStatusValidation(status);
@@ -40,6 +50,11 @@ public class ProductController extends BaseResponse{
 		int i=productService.updateStatus(id,status);
 		return successModel("修改状态成功，数量："+i);
 	}
+	/**
+	 * 保存
+	 * @param productAdd
+	 * @return
+	 */
 	@RequestMapping(value="",method=RequestMethod.POST)
 	public BaseResponse saveProduct(ProductAdd productAdd) {
 		String msg=productValidation.saveProductValidation(productAdd);
@@ -48,16 +63,32 @@ public class ProductController extends BaseResponse{
 		int i=productService.saveProduct(productAdd);
 		return successModel("新增成功，数量："+i);
 	}
+	/**
+	 * 删除
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public BaseResponse deleteProduct(@PathVariable Long id) {
 		int i=productService.deleteProduct(id);
 		return successModel("删除成功，数量："+i);
 	}
+	/**
+	 * id查询
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public BaseResponse getProduct(@PathVariable Long id) {
 		Product product=productService.getProduct(id);
 		return successModel("id查询成功").data(product);
 	}
+	/**
+	 * 修改
+	 * @param id
+	 * @param productUpdate
+	 * @return
+	 */
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
 	public BaseResponse updateProduct(@PathVariable Long id,ProductUpdate productUpdate) {
 		String msg=productValidation.updateProductValidation(productUpdate);
@@ -65,5 +96,15 @@ public class ProductController extends BaseResponse{
 			return errorModel(msg);
 		int i=productService.updateProduct(id,productUpdate);
 		return successModel("修改成功，数量："+i);
+	}
+	/**
+	 * 状态查询
+	 * @param status
+	 * @return
+	 */
+	@RequestMapping(value="/status/{status}",method=RequestMethod.GET)
+	public BaseResponse findByStatus(@PathVariable Integer status) {
+		List<Product> products=productService.findByStatus(status);
+		return successModel("状态查询成功").data(products);
 	}
 }

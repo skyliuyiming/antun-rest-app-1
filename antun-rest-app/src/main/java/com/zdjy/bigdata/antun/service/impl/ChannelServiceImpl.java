@@ -44,7 +44,7 @@ public class ChannelServiceImpl implements ChannelService {
 	@Override
 	public List<Channel> findAll() {
 		ChannelExample channelExample = new ChannelExample();
-		channelExample.setOrderByClause("status,id desc");
+		channelExample.setOrderByClause("status desc,id desc");
 		return channelMapper.selectByExample(channelExample);
 	}
 

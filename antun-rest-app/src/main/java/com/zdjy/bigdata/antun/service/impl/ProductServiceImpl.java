@@ -41,10 +41,14 @@ public class ProductServiceImpl implements ProductService {
 		return null;
 	}
 
+	/**
+	 * 查询全部
+	 * @return
+	 */
 	@Override
 	public List<Product> findAll() {
 		ProductExample productExample = new ProductExample();
-		productExample.setOrderByClause("status,id desc");
+		productExample.setOrderByClause("status desc,id desc");
 		return productMapper.selectByExample(productExample);
 	}
 
@@ -129,5 +133,19 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product getProduct(Long id) {
 		return productMapper.selectByPrimaryKey(id);
+	}
+
+	/**
+	 * 状态查询
+	 * @param status
+	 * @return
+	 */
+	@Override
+	public List<Product> findByStatus(Integer status) {
+		ProductExample productExample = new ProductExample();
+		Criteria createCriteria = productExample.createCriteria();
+		createCriteria.andStatusEqualTo(status);
+		productExample.setOrderByClause("id desc");
+		return productMapper.selectByExample(productExample);
 	}
 }
