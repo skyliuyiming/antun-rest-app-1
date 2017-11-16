@@ -22,4 +22,6 @@ public interface ChannelService {
 
 	Channel getChannel(Long id);
 
+	List<Channel> findByStatus(Integer status);
+
 }

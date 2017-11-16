@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> findAll() {
 		ProductExample productExample = new ProductExample();
-		productExample.setOrderByClause("status desc,id desc");
+		productExample.setOrderByClause("id desc");
 		return productMapper.selectByExample(productExample);
 	}
 
@@ -73,35 +73,10 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	@Override
 	public int saveProduct(ProductAdd productAdd) {
-		Product transfer = transfer(productAdd);
+		Product transfer = TransferUtil.transfer(productAdd,Product.class);
 		return productMapper.insertSelective(transfer);
 	}
 	
-	
-	/**
-	 * 新增类与领域类的转换
-	 * 
-	 * @param productAdd
-	 * @return
-	 */
-	public Product transfer(ProductAdd productAdd) {
-		Product product = new Product();
-		TransferUtil.transfer(product, productAdd);
-		return product;
-	}
-	
-	/**
-	 * 新增类与领域类的转换
-	 * 
-	 * @param productUpdate
-	 * @return
-	 */
-	public Product transfer(ProductUpdate productUpdate) {
-		Product product = new Product();
-		TransferUtil.transfer(product, productUpdate);
-		return product;
-	}
-
 	/**
 	 * 删除
 	 * @param id
@@ -120,7 +95,7 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	@Override
 	public int updateProduct(Long id, ProductUpdate productUpdate) {
-		Product transfer = transfer(productUpdate);
+		Product transfer = TransferUtil.transfer(productUpdate,Product.class);
 		transfer.setId(id);
 		return productMapper.updateByPrimaryKeySelective(transfer);
 	}

@@ -44,7 +44,7 @@ public class ChannelServiceImpl implements ChannelService {
 	@Override
 	public List<Channel> findAll() {
 		ChannelExample channelExample = new ChannelExample();
-		channelExample.setOrderByClause("status desc,id desc");
+		channelExample.setOrderByClause("id desc");
 		return channelMapper.selectByExample(channelExample);
 	}
 
@@ -69,35 +69,10 @@ public class ChannelServiceImpl implements ChannelService {
 	 */
 	@Override
 	public int saveChannel(ChannelAdd channelAdd) {
-		Channel transfer = transfer(channelAdd);
+		Channel transfer = TransferUtil.transfer(channelAdd,Channel.class);
 		return channelMapper.insertSelective(transfer);
 	}
 	
-	
-	/**
-	 * 新增类与领域类的转换
-	 * 
-	 * @param channelAdd
-	 * @return
-	 */
-	public Channel transfer(ChannelAdd channelAdd) {
-		Channel channel = new Channel();
-		TransferUtil.transfer(channel, channelAdd);
-		return channel;
-	}
-	
-	/**
-	 * 新增类与领域类的转换
-	 * 
-	 * @param channelUpdate
-	 * @return
-	 */
-	public Channel transfer(ChannelUpdate channelUpdate) {
-		Channel channel = new Channel();
-		TransferUtil.transfer(channel, channelUpdate);
-		return channel;
-	}
-
 	/**
 	 * 删除
 	 * @param id
@@ -116,7 +91,7 @@ public class ChannelServiceImpl implements ChannelService {
 	 */
 	@Override
 	public int updateChannel(Long id, ChannelUpdate channelUpdate) {
-		Channel transfer = transfer(channelUpdate);
+		Channel transfer = TransferUtil.transfer(channelUpdate,Channel.class);
 		transfer.setId(id);
 		return channelMapper.updateByPrimaryKeySelective(transfer);
 	}
@@ -129,5 +104,19 @@ public class ChannelServiceImpl implements ChannelService {
 	@Override
 	public Channel getChannel(Long id) {
 		return channelMapper.selectByPrimaryKey(id);
+	}
+
+	/**
+	 * 状态查询
+	 * @param status
+	 * @return
+	 */
+	@Override
+	public List<Channel> findByStatus(Integer status) {
+		ChannelExample channelExample = new ChannelExample();
+		Criteria createCriteria = channelExample.createCriteria();
+		createCriteria.andStatusEqualTo(status);
+		channelExample.setOrderByClause("id desc");
+		return channelMapper.selectByExample(channelExample);
 	}
 }

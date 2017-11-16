@@ -66,4 +66,14 @@ public class ChannelController extends BaseResponse{
 		int i=channelService.updateChannel(id,channelUpdate);
 		return successModel("修改成功，数量："+i);
 	}
+	/**
+	 * 状态查询
+	 * @param status
+	 * @return
+	 */
+	@RequestMapping(value="/status/{status}",method=RequestMethod.GET)
+	public BaseResponse findByStatus(@PathVariable Integer status) {
+		List<Channel> channels=channelService.findByStatus(status);
+		return successModel("状态查询成功").data(channels);
+	}
 }

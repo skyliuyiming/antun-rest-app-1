@@ -44,7 +44,7 @@ public class HelloServiceImpl implements HelloService {
 	@Override
 	@Transactional
 	public int saveHello(HelloAdd helloAdd) {
-		Hello transfer = transfer(helloAdd);
+		Hello transfer = TransferUtil.transfer(helloAdd,Hello.class);
 		return helloMapper.insertSelective(transfer);
 	}
 
@@ -68,7 +68,7 @@ public class HelloServiceImpl implements HelloService {
 	@Override
 	@Transactional
 	public int updateHello(Long id, HelloUpdate helloUpdate) {
-		Hello transfer = transfer(helloUpdate);
+		Hello transfer = TransferUtil.transfer(helloUpdate,Hello.class);
 		transfer.setId(id);
 		return helloMapper.updateByPrimaryKeySelective(transfer);
 	}
@@ -104,27 +104,4 @@ public class HelloServiceImpl implements HelloService {
 		return new PageMap(selectByExample, countByExample);
 	}
 	
-	
-	/**
-	 * 新增类与领域类的转换
-	 * 
-	 * @param newsAdd
-	 * @return
-	 */
-	public Hello transfer(HelloAdd helloAdd) {
-		Hello hello = new Hello();
-		TransferUtil.transfer(hello, helloAdd);
-		return hello;
-	}
-	/**
-	 * 修改类与领域类的转换
-	 * 
-	 * @param helloUpdate
-	 * @return
-	 */
-	public Hello transfer(HelloUpdate helloUpdate) {
-		Hello hello = new Hello();
-		TransferUtil.transfer(hello, helloUpdate);
-		return hello;
-	}
 }

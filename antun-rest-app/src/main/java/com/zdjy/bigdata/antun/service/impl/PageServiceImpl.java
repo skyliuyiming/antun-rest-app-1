@@ -31,7 +31,7 @@ public class PageServiceImpl implements PageService {
 	@Override
 	public List<Page> findAll() {
 		PageExample pageExample = new PageExample();
-		pageExample.setOrderByClause("status desc,id desc");
+		pageExample.setOrderByClause("id desc");
 		return pageMapper.selectByExample(pageExample);
 	}
 
@@ -42,35 +42,11 @@ public class PageServiceImpl implements PageService {
 	 */
 	@Override
 	public int savePage(PageAdd pageAdd) {
-		Page transfer = transfer(pageAdd);
+		Page transfer = TransferUtil.transfer(pageAdd,Page.class);
 		transfer.setCode(CodeGenerateUtils.getRandomCode());
 		return pageMapper.insertSelective(transfer);
 	}
 	
-	
-	/**
-	 * 新增类与领域类的转换
-	 * 
-	 * @param pageAdd
-	 * @return
-	 */
-	public Page transfer(PageAdd pageAdd) {
-		Page page = new Page();
-		TransferUtil.transfer(page, pageAdd);
-		return page;
-	}
-	/**
-	 * 新增类与领域类的转换
-	 * 
-	 * @param pageAdd
-	 * @return
-	 */
-	public Page transfer(PageUpdate pageUpdate) {
-		Page page = new Page();
-		TransferUtil.transfer(page, pageUpdate);
-		return page;
-	}
-
 	/**
 	 * 编码查询
 	 * @param code
@@ -161,7 +137,7 @@ public class PageServiceImpl implements PageService {
 	 */
 	@Override
 	public int updatePage(Long id, PageUpdate pageUpdate) {
-		Page transfer = transfer(pageUpdate);
+		Page transfer = TransferUtil.transfer(pageUpdate,Page.class);
 		transfer.setId(id);
 		return pageMapper.updateByPrimaryKeySelective(transfer);
 	}

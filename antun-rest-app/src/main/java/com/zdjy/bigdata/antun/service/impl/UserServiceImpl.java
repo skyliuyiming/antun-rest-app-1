@@ -51,22 +51,12 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	@Override
 	public int saveUser(UserAdd userAdd) {
-		User transfer = transfer(userAdd);
+		User transfer = TransferUtil.transfer(userAdd,User.class);
 		transfer.setCode(CodeGenerateUtils.getRandomCode());
 		return userMapper.insertSelective(transfer);
 	}
 	
-	/**
-	 * 新增类与领域类的转换
-	 * 
-	 * @param newsAdd
-	 * @return
-	 */
-	public User transfer(UserAdd userAdd) {
-		User user = new User();
-		TransferUtil.transfer(user, userAdd);
-		return user;
-	}
+	
 
 	@Override
 	public User findByPhone(String phone) {

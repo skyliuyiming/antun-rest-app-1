@@ -39,18 +39,6 @@ public class PageValidation extends BaseValidation{
 		return null;
 	}
 	/**
-	 * 修改状态验证
-	 * @param status
-	 * @return
-	 */
-	public String updateStatusValidation(Integer status) {
-		if(status==null)
-			return empty("状态");
-		if(status!=1&& status!=0)
-			return "状态异常";
-		return null;
-	}
-	/**
 	 * 修改验证
 	 * @param pageUpdate
 	 * @return

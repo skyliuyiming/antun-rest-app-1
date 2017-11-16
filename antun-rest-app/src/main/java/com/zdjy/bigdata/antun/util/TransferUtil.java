@@ -1,8 +1,8 @@
 package com.zdjy.bigdata.antun.util;
 
-import org.apache.commons.beanutils.PropertyUtils;
-
 import java.lang.reflect.InvocationTargetException;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  * 类型转换工具类
@@ -42,6 +42,20 @@ public class TransferUtil {
      */
     public static void transferThrow(Object dest, Object orig) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         PropertyUtils.copyProperties(dest, orig);
+    }
+    public static <T> T transfer(Object object,Class<T> class1) {
+    	try {
+			T newInstance = class1.newInstance();
+			transfer(newInstance, object);
+			return newInstance;
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return null;
     }
 
 }
