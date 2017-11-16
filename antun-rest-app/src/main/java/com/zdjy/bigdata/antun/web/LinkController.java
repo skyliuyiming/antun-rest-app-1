@@ -27,16 +27,29 @@ public class LinkController extends BaseResponse{
 	private LinkService linkService;
 	@Autowired
 	private LinkValidation linkValidation;
+	/**
+	 * 查询全部
+	 * @return
+	 */
 	@RequestMapping(value="",method=RequestMethod.GET)
 	public BaseResponse findAll() {
 		List<Link> links=linkService.findAll();
 		return successModel("查询全部成功").data(links);
 	}
+	/**
+	 * 查询全部包括页面相关信息
+	 * @return
+	 */
 	@RequestMapping(value="/withPage",method=RequestMethod.GET)
 	public BaseResponse findAllWithLink() {
 		Object object=linkService.findAllWithPage();
 		return successModel("查询全部成功").data(object);
 	}
+	/**
+	 * 保存
+	 * @param linkAdd
+	 * @return
+	 */
 	@RequestMapping(value="",method=RequestMethod.POST)
 	public BaseResponse saveLink(LinkAdd linkAdd) {
 		String msg=linkValidation.saveLinkValidation(linkAdd);
@@ -92,5 +105,31 @@ public class LinkController extends BaseResponse{
 			return errorModel(msg);
 		int i=linkService.updateLink(id,linkUpdate);
 		return successModel("修改成功，数量："+i);
+	}
+	/**
+	 * 编码查询
+	 * @param code
+	 * @return
+	 */
+	@RequestMapping(value="/code",method=RequestMethod.GET)
+	public BaseResponse findByCode(String code) {
+		String msg=linkValidation.codeValidation(code);
+		if(msg!=null)
+			return errorModel(msg);
+		Link link=linkService.findByCode(code);
+		return successModel("编码查询成功").data(link);
+	}
+	/**
+	 * 编码查询
+	 * @param code
+	 * @return
+	 */
+	@RequestMapping(value="/code/withPage",method=RequestMethod.GET)
+	public BaseResponse findByCodeWithPage(String code) {
+		String msg=linkValidation.codeValidation(code);
+		if(msg!=null)
+			return errorModel(msg);
+		Object object=linkService.findByCodeWithPage(code);
+		return successModel("编码查询成功").data(object);
 	}
 }

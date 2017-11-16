@@ -24,4 +24,8 @@ public interface LinkService {
 
 	int updateLink(Long id, LinkUpdate linkUpdate);
 
+	Link findByCode(String code);
+
+	Object findByCodeWithPage(String code);
+
 }

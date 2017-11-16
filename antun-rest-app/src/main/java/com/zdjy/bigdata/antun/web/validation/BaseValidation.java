@@ -1,5 +1,7 @@
 package com.zdjy.bigdata.antun.web.validation;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class BaseValidation {
 	public static final String EMPTY="%s为空"; 
 	public static final String EXIST="%s已存在"; 
@@ -23,6 +25,11 @@ public class BaseValidation {
 			return empty("状态");
 		if(status!=1&& status!=0)
 			return "状态异常";
+		return null;
+	}
+	public String codeValidation(String code) {
+		if(StringUtils.isBlank(code))
+			return empty("编码");
 		return null;
 	}
 }

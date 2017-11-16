@@ -26,8 +26,11 @@ public class LinkServiceImpl implements LinkService {
 	private LinkMapper linkMapper;
 	//查询全部链接和页面相关信息的sql语句
 	private static final String SQL_SELECT_ALL_WITH_PAGE="select l.id,l.channel_name,l.code,l.gmt_create,l.status,p.description,p.product_name,p.platform from link l left join page p on l.page_code=p.code order by l.id desc";
+	private static final String SQL_SELECT_WITH_PAGE_BY_CODE = "select l.code,l.status as status,p.file_name,p.status as status2 from link l left join page p on l.page_code=p.code where l.code='%s' limit 1";
+
 	/**
 	 * 查询全部
+	 * 
 	 * @return
 	 */
 	@Override
@@ -124,6 +127,29 @@ public class LinkServiceImpl implements LinkService {
 		Link transfer = TransferUtil.transfer(linkUpdate, Link.class);
 		transfer.setId(id);
 		return linkMapper.updateByPrimaryKeySelective(transfer);
+	}
+
+	/**
+	 * 编码查询
+	 * @param code
+	 * @return
+	 */
+	@Override
+	public Link findByCode(String code) {
+		LinkExample linkExample = new LinkExample();
+		Criteria createCriteria = linkExample.createCriteria();
+		createCriteria.andCodeEqualTo(code);
+		linkExample.setLimit(1);
+		List<Link> selectByExample = linkMapper.selectByExample(linkExample);
+		if(selectByExample.isEmpty())
+			return null;
+		return selectByExample.get(0);
+	}
+
+	@Override
+	public Object findByCodeWithPage(String code) {
+		List<Map<String, String>> selectBySQL = linkMapper.selectBySQL(String.format(SQL_SELECT_WITH_PAGE_BY_CODE,code));
+		return selectBySQL;
 	}
 	
 }
