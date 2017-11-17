@@ -1,8 +1,12 @@
 package com.zdjy.bigdata.antun.web;
 
+
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zdjy.bigdata.antun.service.UserService;
 import com.zdjy.bigdata.antun.web.model.UserAdd;
 import com.zdjy.bigdata.antun.web.response.BaseResponse;
+import com.zdjy.bigdata.antun.web.response.PageMap;
 import com.zdjy.bigdata.antun.web.validation.UserValidation;
 
 /**
@@ -54,5 +59,15 @@ public class UserController extends BaseResponse{
 			return errorModel(msg);
 		int i=userService.saveUser(userAdd);
 		return successModel("入库成功，数量："+i);
+	}
+	@RequestMapping(value="/page",method=RequestMethod.GET)
+	public BaseResponse findByPage(Integer offset,Integer limit,String phone,String name){
+		PageMap pageMap=userService.findByPage(offset,limit,phone,name);
+		return successModel("分页查询成功").data(pageMap);
+	}
+	@RequestMapping(value="/{code}/withSending",method=RequestMethod.GET)
+	public BaseResponse findWithSendingByCode(@PathVariable String code){
+		Map<String,Object> map=userService.findWithSendingByCode(code);
+		return successModel("查询成功").data(map);
 	}
 }

@@ -1,7 +1,10 @@
 package com.zdjy.bigdata.antun.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +21,7 @@ import com.zdjy.bigdata.antun.util.CodeGenerateUtils;
 import com.zdjy.bigdata.antun.util.EsapiUtil;
 import com.zdjy.bigdata.antun.util.TransferUtil;
 import com.zdjy.bigdata.antun.web.model.UserAdd;
+import com.zdjy.bigdata.antun.web.response.PageMap;
 /**
  * 用户业务类
  * @author david
@@ -109,5 +113,65 @@ public class UserServiceImpl implements UserService {
 		if(i>0)
 			return userMapper.updateByPrimaryKeySelective(user2);
 		return 0;
+	}
+
+
+
+	/**
+	 * 分页查询
+	 * @param offset
+	 * @param limit
+	 * @param phone
+	 * @param name
+	 * @return
+	 */
+	@Override
+	public PageMap findByPage(Integer offset, Integer limit, String phone, String name) {
+		if(offset==null||offset<0)
+			offset=0;
+		if(limit==null||limit<0||limit>10)
+			offset=10;
+		UserExample userExample = new UserExample();
+		Criteria createCriteria = userExample.createCriteria();
+		if(StringUtils.isNoneBlank(phone))
+			createCriteria.andPhoneEqualTo(EsapiUtil.sql(phone));
+		if(StringUtils.isNoneBlank(name))
+			createCriteria.andNameLike(EsapiUtil.sql(name)+"%");
+		userExample.setOrderByClause("id desc");
+		userExample.setLimit(limit);
+		userExample.setOffset(offset);
+		List<User> selectByExample = userMapper.selectByExample(userExample);
+		long countByExample = userMapper.countByExample(userExample);
+		return new PageMap(selectByExample, countByExample);
+	}
+
+
+
+	@Override
+	public Map<String,Object> findWithSendingByCode(String code) {
+		User user=findByCode(code);
+		UserSending userSending=userSendingService.findByUserCode(code);
+		Map<String,Object> map=new HashMap<>();
+		map.put("user",user);
+		map.put("userSending",userSending);
+		return map;
+	}
+
+
+
+	/**
+	 * 编码查询
+	 * @param code
+	 * @return
+	 */
+	private User findByCode(String code) {
+		UserExample userExample=new UserExample();
+		Criteria createCriteria = userExample.createCriteria();
+		createCriteria.andCodeEqualTo(EsapiUtil.sql(code));
+		userExample.setLimit(1);
+		List<User> selectByExample = userMapper.selectByExample(userExample);
+		if(!selectByExample.isEmpty())
+			return selectByExample.get(0);
+		return null;
 	}
 }

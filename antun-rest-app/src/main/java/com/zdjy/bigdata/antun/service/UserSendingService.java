@@ -6,4 +6,6 @@ public interface UserSendingService {
 
 	int saveUserSending(UserSending userSending);
 
+	UserSending findByUserCode(String userCode);
+
 }
