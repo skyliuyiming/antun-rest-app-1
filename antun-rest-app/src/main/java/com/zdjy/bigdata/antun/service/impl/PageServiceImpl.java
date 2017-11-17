@@ -11,6 +11,7 @@ import com.zdjy.bigdata.antun.domain.PageExample.Criteria;
 import com.zdjy.bigdata.antun.mapper.PageMapper;
 import com.zdjy.bigdata.antun.service.PageService;
 import com.zdjy.bigdata.antun.util.CodeGenerateUtils;
+import com.zdjy.bigdata.antun.util.EsapiUtil;
 import com.zdjy.bigdata.antun.util.TransferUtil;
 import com.zdjy.bigdata.antun.web.model.PageAdd;
 import com.zdjy.bigdata.antun.web.model.PageUpdate;
@@ -56,7 +57,7 @@ public class PageServiceImpl implements PageService {
 	public Page findByCode(String code) {
 		PageExample pageExample = new PageExample();
 		Criteria createCriteria = pageExample.createCriteria();
-		createCriteria.andCodeEqualTo(code);
+		createCriteria.andCodeEqualTo(EsapiUtil.sql(code));
 		pageExample.setLimit(1);
 		List<Page> selectByExample = pageMapper.selectByExample(pageExample);
 		if(selectByExample.isEmpty())
@@ -73,7 +74,7 @@ public class PageServiceImpl implements PageService {
 	public Page findByFileName(String fileName) {
 		PageExample pageExample = new PageExample();
 		Criteria createCriteria = pageExample.createCriteria();
-		createCriteria.andFileNameEqualTo(fileName);
+		createCriteria.andFileNameEqualTo(EsapiUtil.sql(fileName));
 		pageExample.setLimit(1);
 		List<Page> selectByExample = pageMapper.selectByExample(pageExample);
 		if(selectByExample.isEmpty())
