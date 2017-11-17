@@ -20,7 +20,7 @@ public class EsapiUtil {
 	 * @return
 	 */
 	public static String sql(String str) {
-		MySQLCodec codec = new MySQLCodec(Mode.STANDARD);
+		MySQLCodec codec = new MySQLCodec(Mode.ANSI);
 		return ESAPI.encoder().encodeForSQL(codec, str);
 	}
 

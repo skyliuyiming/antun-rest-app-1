@@ -12,7 +12,6 @@ import com.zdjy.bigdata.antun.domain.LinkExample.Criteria;
 import com.zdjy.bigdata.antun.mapper.LinkMapper;
 import com.zdjy.bigdata.antun.service.LinkService;
 import com.zdjy.bigdata.antun.util.CodeGenerateUtils;
-import com.zdjy.bigdata.antun.util.EsapiUtil;
 import com.zdjy.bigdata.antun.util.TransferUtil;
 import com.zdjy.bigdata.antun.web.model.LinkAdd;
 import com.zdjy.bigdata.antun.web.model.LinkUpdate;
@@ -74,8 +73,8 @@ public class LinkServiceImpl implements LinkService {
 	public Link findByChannelCodeAndPageCode(String channelCode, String pageCode) {
 		LinkExample linkExample = new LinkExample();
 		Criteria createCriteria = linkExample.createCriteria();
-		createCriteria.andChannelCodeEqualTo(EsapiUtil.sql(channelCode));
-		createCriteria.andPageCodeEqualTo(EsapiUtil.sql(pageCode));
+		createCriteria.andChannelCodeEqualTo(channelCode);
+		createCriteria.andPageCodeEqualTo(pageCode);
 		linkExample.setLimit(1);
 		List<Link> selectByExample = linkMapper.selectByExample(linkExample);
 		if(selectByExample.isEmpty())
@@ -139,7 +138,7 @@ public class LinkServiceImpl implements LinkService {
 	public Link findByCode(String code) {
 		LinkExample linkExample = new LinkExample();
 		Criteria createCriteria = linkExample.createCriteria();
-		createCriteria.andCodeEqualTo(EsapiUtil.sql(code));
+		createCriteria.andCodeEqualTo(code);
 		linkExample.setLimit(1);
 		List<Link> selectByExample = linkMapper.selectByExample(linkExample);
 		if(selectByExample.isEmpty())
@@ -149,7 +148,7 @@ public class LinkServiceImpl implements LinkService {
 
 	@Override
 	public Object findByCodeWithPage(String code) {
-		List<Map<String, String>> selectBySQL = linkMapper.selectBySQL(String.format(SQL_SELECT_WITH_PAGE_BY_CODE,EsapiUtil.sql(code)));
+		List<Map<String, String>> selectBySQL = linkMapper.selectBySQL(String.format(SQL_SELECT_WITH_PAGE_BY_CODE,code));
 		return selectBySQL;
 	}
 	
