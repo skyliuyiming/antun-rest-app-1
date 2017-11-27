@@ -4,12 +4,11 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+
 /**
  * 类型转换工具类
- *
- * @author Garen Gosling
- * @create 2017-09-14 22:43
- * @since v1.0
+ * @author david
+ * @create 2017年11月27日 下午1:43:48
  */
 public class TransferUtil {
 
@@ -43,6 +42,7 @@ public class TransferUtil {
     public static void transferThrow(Object dest, Object orig) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         PropertyUtils.copyProperties(dest, orig);
     }
+    
     public static <T> T transfer(Object object,Class<T> class1) {
     	try {
 			T newInstance = class1.newInstance();

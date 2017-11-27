@@ -21,6 +21,7 @@ logging:
   level:
     root: info
     com.zdjy.bigdata.antun.scheduler.PingAnSendingScheduler: debug
+    com.zdjy.bigdata.antun.scheduler.StatisticScheduler: debug
     com.zdjy.bigdata.antun.remote.PingAnSending: debug
     com.zdjy.bigdata.antun.web.UserController: debug
 pingan:
