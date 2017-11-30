@@ -28,4 +28,6 @@ public interface LinkService {
 
 	Object findByCodeWithPage(String code);
 
+	void deleteFindByCodeWithPageCache();
+	void deleteFindByCodeCache();
 }

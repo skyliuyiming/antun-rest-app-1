@@ -4,29 +4,37 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.zdjy.bigdata.antun.domain.Link;
 import com.zdjy.bigdata.antun.domain.LinkExample;
 import com.zdjy.bigdata.antun.domain.LinkExample.Criteria;
 import com.zdjy.bigdata.antun.mapper.LinkMapper;
+import com.zdjy.bigdata.antun.redis.RedisService;
 import com.zdjy.bigdata.antun.service.LinkService;
 import com.zdjy.bigdata.antun.util.CodeGenerateUtils;
 import com.zdjy.bigdata.antun.util.EsapiUtil;
 import com.zdjy.bigdata.antun.util.TransferUtil;
 import com.zdjy.bigdata.antun.web.model.LinkAdd;
 import com.zdjy.bigdata.antun.web.model.LinkUpdate;
+
 /**
  * 链接业务类
+ * 
  * @author david
  * @create 2017年11月16日 上午11:12:55
  */
 @Service
+@CacheConfig(cacheNames = "link")
 public class LinkServiceImpl implements LinkService {
 	@Autowired
 	private LinkMapper linkMapper;
-	//查询全部链接和页面相关信息的sql语句
-	private static final String SQL_SELECT_ALL_WITH_PAGE="select l.id,l.channel_name,l.code,l.gmt_create,l.status,p.description,p.product_name,p.platform from link l left join page p on l.page_code=p.code order by l.id desc";
+	@Autowired
+	private RedisService redisService;
+	// 查询全部链接和页面相关信息的sql语句
+	private static final String SQL_SELECT_ALL_WITH_PAGE = "select l.id,l.channel_name,l.code,l.gmt_create,l.status,p.description,p.product_name,p.platform from link l left join page p on l.page_code=p.code order by l.id desc";
 	private static final String SQL_SELECT_WITH_PAGE_BY_CODE = "select l.code,l.status as status,p.file_name,p.status as status2 from link l left join page p on l.page_code=p.code where l.code='%s' limit 1";
 
 	/**
@@ -43,6 +51,7 @@ public class LinkServiceImpl implements LinkService {
 
 	/**
 	 * 查询全部包括页面信息
+	 * 
 	 * @return
 	 */
 	@Override
@@ -53,6 +62,7 @@ public class LinkServiceImpl implements LinkService {
 
 	/**
 	 * 保存链接
+	 * 
 	 * @param linkAdd
 	 * @return
 	 */
@@ -66,6 +76,7 @@ public class LinkServiceImpl implements LinkService {
 
 	/**
 	 * 渠道和页面查询
+	 * 
 	 * @param channelCode
 	 * @param pageCode
 	 * @return
@@ -78,23 +89,27 @@ public class LinkServiceImpl implements LinkService {
 		createCriteria.andPageCodeEqualTo(EsapiUtil.sql(pageCode));
 		linkExample.setLimit(1);
 		List<Link> selectByExample = linkMapper.selectByExample(linkExample);
-		if(selectByExample.isEmpty())
+		if (selectByExample.isEmpty())
 			return null;
 		return selectByExample.get(0);
 	}
 
 	/**
 	 * 删除
+	 * 
 	 * @param id
 	 * @return
 	 */
 	@Override
 	public int deleteLink(Long id) {
+		deleteFindByCodeWithPageCache();
+		deleteFindByCodeCache();
 		return linkMapper.deleteByPrimaryKey(id);
 	}
 
 	/**
 	 * id查询
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -105,12 +120,15 @@ public class LinkServiceImpl implements LinkService {
 
 	/**
 	 * 修改状态
+	 * 
 	 * @param id
 	 * @param status
 	 * @return
 	 */
 	@Override
 	public int updateStatus(Long id, Integer status) {
+		deleteFindByCodeWithPageCache();
+		deleteFindByCodeCache();
 		Link link = new Link();
 		link.setId(id);
 		link.setStatus(status);
@@ -119,6 +137,7 @@ public class LinkServiceImpl implements LinkService {
 
 	/**
 	 * 修改
+	 * 
 	 * @param id
 	 * @param linkUpdate
 	 * @return
@@ -132,25 +151,44 @@ public class LinkServiceImpl implements LinkService {
 
 	/**
 	 * 编码查询
+	 * 
 	 * @param code
 	 * @return
 	 */
 	@Override
+	@Cacheable(unless = "#result==null")
 	public Link findByCode(String code) {
 		LinkExample linkExample = new LinkExample();
 		Criteria createCriteria = linkExample.createCriteria();
 		createCriteria.andCodeEqualTo(EsapiUtil.sql(code));
 		linkExample.setLimit(1);
 		List<Link> selectByExample = linkMapper.selectByExample(linkExample);
-		if(selectByExample.isEmpty())
+		if (selectByExample.isEmpty())
 			return null;
 		return selectByExample.get(0);
 	}
 
+	@Cacheable(unless = "#result.size()==0")
 	@Override
 	public Object findByCodeWithPage(String code) {
-		List<Map<String, String>> selectBySQL = linkMapper.selectBySQL(String.format(SQL_SELECT_WITH_PAGE_BY_CODE,EsapiUtil.sql(code)));
+		List<Map<String, String>> selectBySQL = linkMapper
+				.selectBySQL(String.format(SQL_SELECT_WITH_PAGE_BY_CODE, EsapiUtil.sql(code)));
 		return selectBySQL;
 	}
-	
+
+	// 缓存的key
+	private String deleteFindByCodeWithPage_redisKey = "LinkServiceImpl_findByCodeWithPage:*";
+
+	@Override
+	public void deleteFindByCodeWithPageCache() {
+		redisService.delKeys(deleteFindByCodeWithPage_redisKey);
+	}
+
+	// 缓存的key
+	private String deleteFindByCodeCache_redisKey = "LinkServiceImpl_findByCode:*";
+
+	@Override
+	public void deleteFindByCodeCache() {
+		redisService.delKeys(deleteFindByCodeCache_redisKey);
+	}
 }

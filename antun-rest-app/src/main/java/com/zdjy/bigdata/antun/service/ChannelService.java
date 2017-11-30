@@ -24,4 +24,5 @@ public interface ChannelService {
 
 	List<Channel> findByStatus(Integer status);
 
+	void deleteFindByCodeCache();
 }

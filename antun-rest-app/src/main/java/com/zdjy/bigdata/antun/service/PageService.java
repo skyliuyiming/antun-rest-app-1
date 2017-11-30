@@ -25,5 +25,6 @@ public interface PageService {
 	int updateStatus(Long id, Integer status);
 
 	int updatePage(Long id, PageUpdate pageUpdate);
-
+	
+	void deleteFindByCodeCache();
 }

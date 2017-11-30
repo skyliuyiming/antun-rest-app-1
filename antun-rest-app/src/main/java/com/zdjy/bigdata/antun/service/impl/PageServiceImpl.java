@@ -3,12 +3,16 @@ package com.zdjy.bigdata.antun.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.zdjy.bigdata.antun.domain.Page;
 import com.zdjy.bigdata.antun.domain.PageExample;
 import com.zdjy.bigdata.antun.domain.PageExample.Criteria;
 import com.zdjy.bigdata.antun.mapper.PageMapper;
+import com.zdjy.bigdata.antun.redis.RedisService;
+import com.zdjy.bigdata.antun.service.LinkService;
 import com.zdjy.bigdata.antun.service.PageService;
 import com.zdjy.bigdata.antun.util.CodeGenerateUtils;
 import com.zdjy.bigdata.antun.util.EsapiUtil;
@@ -21,10 +25,12 @@ import com.zdjy.bigdata.antun.web.model.PageUpdate;
  * @create 2017年11月15日 下午4:34:54
  */
 @Service
+@CacheConfig(cacheNames="page")
 public class PageServiceImpl implements PageService {
 	@Autowired
 	private PageMapper pageMapper;
-
+	@Autowired
+	private LinkService linkService;
 	/**
 	 * 查询全部
 	 * @return
@@ -54,6 +60,7 @@ public class PageServiceImpl implements PageService {
 	 * @return
 	 */
 	@Override
+	@Cacheable(unless="#result==null")
 	public Page findByCode(String code) {
 		PageExample pageExample = new PageExample();
 		Criteria createCriteria = pageExample.createCriteria();
@@ -103,6 +110,8 @@ public class PageServiceImpl implements PageService {
 	 */
 	@Override
 	public int deletePage(Long id) {
+		deleteFindByCodeCache();
+		linkService.deleteFindByCodeWithPageCache();
 		return pageMapper.deleteByPrimaryKey(id);
 	}
 
@@ -124,6 +133,8 @@ public class PageServiceImpl implements PageService {
 	 */
 	@Override
 	public int updateStatus(Long id, Integer status) {
+		deleteFindByCodeCache();
+		linkService.deleteFindByCodeWithPageCache();
 		Page page = new Page();
 		page.setId(id);
 		page.setStatus(status);
@@ -138,8 +149,17 @@ public class PageServiceImpl implements PageService {
 	 */
 	@Override
 	public int updatePage(Long id, PageUpdate pageUpdate) {
+		deleteFindByCodeCache();
+		linkService.deleteFindByCodeWithPageCache();
 		Page transfer = TransferUtil.transfer(pageUpdate,Page.class);
 		transfer.setId(id);
 		return pageMapper.updateByPrimaryKeySelective(transfer);
+	}
+	private String deleteFindByCodeCache_redisKey="PageServiceImpl_findByCode:*";
+	@Autowired
+	private RedisService redisService;
+	@Override
+	public void deleteFindByCodeCache() {
+		redisService.delKeys(deleteFindByCodeCache_redisKey);
 	}
 }

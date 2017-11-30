@@ -24,4 +24,5 @@ public interface ProductService {
 
 	List<Product> findByStatus(Integer status);
 
+	void deleteFindByCodeCache();
 }

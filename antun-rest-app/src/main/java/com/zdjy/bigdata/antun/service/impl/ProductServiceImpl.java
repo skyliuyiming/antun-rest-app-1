@@ -3,12 +3,15 @@ package com.zdjy.bigdata.antun.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.zdjy.bigdata.antun.domain.Product;
 import com.zdjy.bigdata.antun.domain.ProductExample;
 import com.zdjy.bigdata.antun.domain.ProductExample.Criteria;
 import com.zdjy.bigdata.antun.mapper.ProductMapper;
+import com.zdjy.bigdata.antun.redis.RedisService;
 import com.zdjy.bigdata.antun.service.ProductService;
 import com.zdjy.bigdata.antun.util.EsapiUtil;
 import com.zdjy.bigdata.antun.util.TransferUtil;
@@ -20,6 +23,7 @@ import com.zdjy.bigdata.antun.web.model.ProductUpdate;
  * @create 2017年11月13日 下午2:48:27
  */
 @Service
+@CacheConfig(cacheNames="product")
 public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductMapper productMapper;
@@ -30,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
 	 * @return
 	 */
 	@Override
+	@Cacheable(unless="#result==null")
 	public Product findByCode(String productCode) {
 		ProductExample productExample = new ProductExample();
 		Criteria createCriteria = productExample.createCriteria();
@@ -60,6 +65,7 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	@Override
 	public int updateStatus(Long id, Integer status) {
+		deleteFindByCodeCache();
 		Product product = new Product();
 		product.setId(id);
 		product.setStatus(status);
@@ -84,6 +90,7 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	@Override
 	public int deleteProduct(Long id) {
+		deleteFindByCodeCache();
 		return productMapper.deleteByPrimaryKey(id);
 	}
 
@@ -95,6 +102,7 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	@Override
 	public int updateProduct(Long id, ProductUpdate productUpdate) {
+		deleteFindByCodeCache();
 		Product transfer = TransferUtil.transfer(productUpdate,Product.class);
 		transfer.setId(id);
 		return productMapper.updateByPrimaryKeySelective(transfer);
@@ -122,5 +130,12 @@ public class ProductServiceImpl implements ProductService {
 		createCriteria.andStatusEqualTo(status);
 		productExample.setOrderByClause("id desc");
 		return productMapper.selectByExample(productExample);
+	}
+	private String deleteFindByCodeCache_redisKey="ProductServiceImpl_findByCode:*";
+	@Autowired
+	private RedisService redisService;
+	@Override
+	public void deleteFindByCodeCache() {
+		redisService.delKeys(deleteFindByCodeCache_redisKey);
 	}
 }
