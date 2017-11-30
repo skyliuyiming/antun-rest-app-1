@@ -18,7 +18,7 @@ public class StatisticScheduler {
 	@Autowired
 	private StatisticService statisticService;
 	private Logger logger = LoggerFactory.getLogger(StatisticScheduler.class);
-	@Scheduled(cron="* * * * * ?")
+	@Scheduled(cron="0 0 * * * ?")
 	public void statistic() {
 		logger.debug("统计任务...");
 		//查询数据

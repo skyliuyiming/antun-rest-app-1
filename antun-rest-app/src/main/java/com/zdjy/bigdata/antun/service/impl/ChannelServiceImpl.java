@@ -36,66 +36,20 @@ public class ChannelServiceImpl implements ChannelService {
 		createCriteria.andCodeEqualTo(EsapiUtil.sql(channelCode));
 		channelExample.setLimit(1);
 		List<Channel> selectByExample = channelMapper.selectByExample(channelExample);
-		if(!selectByExample.isEmpty())
-			return selectByExample.get(0);
-		return null;
+		if(selectByExample.isEmpty())
+			return null;
+		Channel channel = selectByExample.get(0);
+		return channel;
 	}
 
 	@Override
 	public List<Channel> findAll() {
 		ChannelExample channelExample = new ChannelExample();
 		channelExample.setOrderByClause("id desc");
-		return channelMapper.selectByExample(channelExample);
-	}
-
-	/**
-	 * 修改状态
-	 * @param id
-	 * @param status
-	 * @return
-	 */
-	@Override
-	public int updateStatus(Long id, Integer status) {
-		Channel channel = new Channel();
-		channel.setId(id);
-		channel.setStatus(status);
-		return channelMapper.updateByPrimaryKeySelective(channel);
-	}
-
-	/**
-	 * 保存渠道
-	 * @param channelAdd
-	 * @return
-	 */
-	@Override
-	public int saveChannel(ChannelAdd channelAdd) {
-		Channel transfer = TransferUtil.transfer(channelAdd,Channel.class);
-		return channelMapper.insertSelective(transfer);
+		List<Channel> selectByExample = channelMapper.selectByExample(channelExample);
+		return selectByExample;
 	}
 	
-	/**
-	 * 删除
-	 * @param id
-	 * @return
-	 */
-	@Override
-	public int deleteChannel(Long id) {
-		return channelMapper.deleteByPrimaryKey(id);
-	}
-
-	/**
-	 * 修改
-	 * @param id
-	 * @param channelUpdate
-	 * @return
-	 */
-	@Override
-	public int updateChannel(Long id, ChannelUpdate channelUpdate) {
-		Channel transfer = TransferUtil.transfer(channelUpdate,Channel.class);
-		transfer.setId(id);
-		return channelMapper.updateByPrimaryKeySelective(transfer);
-	}
-
 	/**
 	 * id查询
 	 * @param id
@@ -103,7 +57,8 @@ public class ChannelServiceImpl implements ChannelService {
 	 */
 	@Override
 	public Channel getChannel(Long id) {
-		return channelMapper.selectByPrimaryKey(id);
+		Channel channel=channelMapper.selectByPrimaryKey(id);
+		return channel;
 	}
 
 	/**
@@ -117,6 +72,61 @@ public class ChannelServiceImpl implements ChannelService {
 		Criteria createCriteria = channelExample.createCriteria();
 		createCriteria.andStatusEqualTo(status);
 		channelExample.setOrderByClause("id desc");
-		return channelMapper.selectByExample(channelExample);
+		List<Channel> selectByExample = channelMapper.selectByExample(channelExample);
+		return selectByExample;
 	}
+
+	/**
+	 * 修改状态
+	 * @param id
+	 * @param status
+	 * @return
+	 */
+	@Override
+	public int updateStatus(Long id, Integer status) {
+		Channel channel = new Channel();
+		channel.setId(id);
+		channel.setStatus(status);
+		int updateByPrimaryKeySelective = channelMapper.updateByPrimaryKeySelective(channel);
+		return updateByPrimaryKeySelective;
+	}
+
+	/**
+	 * 保存渠道
+	 * @param channelAdd
+	 * @return
+	 */
+	@Override
+	public int saveChannel(ChannelAdd channelAdd) {
+		Channel transfer = TransferUtil.transfer(channelAdd,Channel.class);
+		int insertSelective = channelMapper.insertSelective(transfer);
+		return insertSelective;
+	}
+	
+	/**
+	 * 删除
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public int deleteChannel(Long id) {
+		int deleteByPrimaryKey = channelMapper.deleteByPrimaryKey(id);
+		return deleteByPrimaryKey;
+	}
+
+	/**
+	 * 修改
+	 * @param id
+	 * @param channelUpdate
+	 * @return
+	 */
+	@Override
+	public int updateChannel(Long id, ChannelUpdate channelUpdate) {
+		Channel transfer = TransferUtil.transfer(channelUpdate,Channel.class);
+		transfer.setId(id);
+		int updateByPrimaryKeySelective = channelMapper.updateByPrimaryKeySelective(transfer);
+		return updateByPrimaryKeySelective;
+	}
+
+	
 }

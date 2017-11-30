@@ -30,7 +30,8 @@ public class AreaServiceImpl implements AreaService {
 		AreaExample areaExample=new AreaExample();
 		Criteria createCriteria = areaExample.createCriteria();
 		createCriteria.andParentIdEqualTo(parentId);
-		return areaMapper.selectByExample(areaExample);
+		List<Area> selectByExample = areaMapper.selectByExample(areaExample);
+		return selectByExample;
 	}
 
 	/**
@@ -40,6 +41,7 @@ public class AreaServiceImpl implements AreaService {
 	 */
 	@Override
 	public Area findArea(Long id) {
-		return areaMapper.selectByPrimaryKey(id);
+		Area area=areaMapper.selectByPrimaryKey(id);
+		return area;
 	}
 }
