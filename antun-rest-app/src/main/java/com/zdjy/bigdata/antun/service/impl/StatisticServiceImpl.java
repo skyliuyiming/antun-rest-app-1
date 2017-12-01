@@ -26,17 +26,17 @@ public class StatisticServiceImpl implements StatisticService {
 	private StatisticMapper statisticMapper;
 	private String sql = "select d.dimension_key as dimension_key, "
 			+ "case when a.dimension_value is null then 0 else a.dimension_value end as last_day, "
-			+ "case when b.dimension_value is null then 0 else b.dimension_value END as last_week, "
+			+ "case when b.dimension_value is null then 0 else b.dimension_value end as last_week, "
 			+ "case when c.dimension_value is null then 0 else c.dimension_value end as last_month, "
 			+ "d.dimension_value as all_day " + "from "
-			+ "(select dimension_key,SUM(dimension_value) as dimension_value from statistic WHERE dimension='%s' GROUP BY dimension_key) d "
-			+ "LEFT JOIN "
-			+ "(select dimension_key,SUM(dimension_value) as dimension_value from statistic WHERE dimension='%s' and day>='%s' GROUP BY dimension_key) c "
-			+ "on d.dimension_key=c.dimension_key " + "LEFT JOIN "
-			+ "(select dimension_key,SUM(dimension_value) as dimension_value from statistic WHERE dimension='%s' and day>='%s' GROUP BY dimension_key) b "
-			+ "ON C.dimension_key=B.dimension_key " + " LEFT join "
-			+ "(select dimension_key,SUM(dimension_value) as dimension_value from statistic WHERE dimension='%s' and day>='%s' GROUP BY dimension_key) a "
-			+ "on C.dimension_key=A.dimension_key";
+			+ "(select dimension_key,sum(dimension_value) as dimension_value from statistic where dimension='%s' group by dimension_key) d "
+			+ "left join "
+			+ "(select dimension_key,sum(dimension_value) as dimension_value from statistic where dimension='%s' and day>='%s' group by dimension_key) c "
+			+ "on d.dimension_key=c.dimension_key " + "left join "
+			+ "(select dimension_key,sum(dimension_value) as dimension_value from statistic where dimension='%s' and day>='%s' group by dimension_key) b "
+			+ "on c.dimension_key=b.dimension_key " + " left join "
+			+ "(select dimension_key,sum(dimension_value) as dimension_value from statistic where dimension='%s' and day>='%s' group by dimension_key) a "
+			+ "on c.dimension_key=a.dimension_key";
 
 	@Override
 	public List<Map<String, Object>> findStatistic(String dimension) {
