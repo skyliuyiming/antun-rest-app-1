@@ -104,7 +104,7 @@ public class StatisticServiceImpl implements StatisticService {
 				+ "WHEN YEAR (from_days(datediff(now(),str_to_date(u.birth, '%Y-%m-%d')))) < 30 THEN	'20-30' "
 				+ "WHEN YEAR (from_days(datediff(now(),str_to_date(u.birth, '%Y-%m-%d')))) < 40 THEN	'30-40' "
 				+ "WHEN YEAR (from_days(datediff(now(),str_to_date(u.birth, '%Y-%m-%d')))) < 50 THEN	'40-50' "
-				+ "ELSE '>50' END AS dimension_key, count(1) AS dimension_value " + "FROM USER u WHERE	1 = 1 "
+				+ "ELSE '>50' END AS dimension_key, count(1) AS dimension_value " + "FROM user u WHERE	1 = 1 "
 				+ "AND DATE_FORMAT(u.gmt_create, '%Y-%m-%d') < '" + lastDay + "' ";
 		if (StringUtils.isNoneBlank(fromDay))
 			age_sql += "AND DATE_FORMAT(u.gmt_create, '%Y-%m-%d') > '" + fromDay + "' ";
@@ -124,7 +124,7 @@ public class StatisticServiceImpl implements StatisticService {
 				+ "SELECT DATE_FORMAT(u.gmt_create, '%Y-%m-%d') AS DAY,'status' AS dimension, "
 				+ "CASE u.status WHEN 0 THEN '未发送' " + "WHEN 1 THEN '外发成功，数据有效' " + "WHEN 2 THEN '外发成功，数据无效' "
 				+ "WHEN 3 THEN '外发失败' " + "ELSE '状态异常' END AS dimension_key, count(1) AS dimension_value "
-				+ "FROM USER u WHERE	1 = 1 " + "AND DATE_FORMAT(u.gmt_create, '%Y-%m-%d') < '" + lastDay + "' ";
+				+ "FROM user u WHERE	1 = 1 " + "AND DATE_FORMAT(u.gmt_create, '%Y-%m-%d') < '" + lastDay + "' ";
 		if (StringUtils.isNoneBlank(fromDay))
 			age_sql += "AND DATE_FORMAT(u.gmt_create, '%Y-%m-%d') > '" + fromDay + "' ";
 		age_sql += "GROUP BY DAY,dimension,dimension_key;";
@@ -141,7 +141,7 @@ public class StatisticServiceImpl implements StatisticService {
 		String age_sql = "insert into statistic (day,dimension,dimension_key,dimension_value) "+
 				"SELECT DATE_FORMAT(u.gmt_create, '%Y-%m-%d') AS DAY,'product' AS dimension, "+
 				"u.product_name AS dimension_key, count(1) AS dimension_value "+
-				"FROM USER u WHERE	1 = 1 "+
+				"FROM user u WHERE	1 = 1 "+
 				"AND DATE_FORMAT(u.gmt_create, '%Y-%m-%d') < '"+lastDay+"' ";
 		if (StringUtils.isNoneBlank(fromDay))
 			age_sql += "AND DATE_FORMAT(u.gmt_create, '%Y-%m-%d') > '" + fromDay + "' ";
@@ -159,7 +159,7 @@ public class StatisticServiceImpl implements StatisticService {
 		String age_sql = "insert into statistic (day,dimension,dimension_key,dimension_value) "+
 				"SELECT DATE_FORMAT(u.gmt_create, '%Y-%m-%d') AS DAY,'channel' AS dimension, "+
 				"u.channel_name AS dimension_key, count(1) AS dimension_value "+
-				"FROM USER u WHERE	1 = 1 "+
+				"FROM user u WHERE	1 = 1 "+
 				"AND DATE_FORMAT(u.gmt_create, '%Y-%m-%d') < '"+lastDay+"' ";
 		if (StringUtils.isNoneBlank(fromDay))
 			age_sql += "AND DATE_FORMAT(u.gmt_create, '%Y-%m-%d') > '" + fromDay + "' ";
